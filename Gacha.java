@@ -1,3 +1,5 @@
+// GACHA
+
 
 public class Gacha {
 	public final int MAX_CONST=3;
