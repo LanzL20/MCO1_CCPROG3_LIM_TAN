@@ -1,66 +1,83 @@
 
-public class Plant {//note might need to revise cuz it might be better to take from a list of predefined plants and just assign the pre assigned plants to the tiles
+public class Plant {// note might need to revise cuz it might be better to take from a list of
+					// predefined plants and just assign the pre assigned plants to the tiles
 
-	public final int PLANT_TURNIP=0;
-	public final int PLANT_CARROT=1;
-	public final int PLANT_POTATO=2;
-	public final int PLANT_ROSE=3;
-	public final int PLANT_TULIP=4;
-	public final int PLANT_SUNFLOWER=5;
-	public final int PLANT_MANGO=6;
-	public final int PLANT_APPLE=7;
-	
-	public final int CONST_MULTIPLIER_TURNIP=1;
-	public final int CONST_MULTIPLIER_CARROT=1;
-	public final int CONST_MULTIPLIER_POTATO=1;
-	public final int CONST_MULTIPLIER_ROSE=1;
-	public final int CONST_MULTIPLIER_TULIP=1;
-	public final int CONST_MULTIPLIER_SUNFLOWER=1;
-	public final int CONST_MULTIPLIER_MANGO=1;
-	public final int CONST_MULTIPLIER_APPLE=1;
+	public final static int PLANT_TURNIP = 0;
+	public final static int PLANT_CARROT = 1;
+	public final static int PLANT_POTATO = 2;
+	public final static int PLANT_ROSE = 3;
+	public final static int PLANT_TULIP = 4;
+	public final static int PLANT_SUNFLOWER = 5;
+	public final static int PLANT_MANGO = 6;
+	public final static int PLANT_APPLE = 7;
 
-	
+	private final static int[] BUY_PRICE = { 500, 1000, 2000, 5000, 1000, 2000, 10000, 20000 }; // 100x
+	private final static int[] SELL_PRICE = { 600, 900, 300, 500, 900, 1900, 800, 500 }; // (Base Sell Prices) 100x
+	private final static int[] REQUIRED_WATER = { 1, 1, 3, 1, 2, 2, 7, 7 };
+	private final static int[] REQUIRED_FERTILIZER = { 0, 0, 1, 0, 0, 1, 4, 5 };
+	private final static int[] BONUS_WATER_CAP = { 2, 2, 4, 2, 3, 3, 7, 7 };
+	private final static int[] BONUS_FERTILIZER_CAP = { 1, 1, 2, 1, 1, 2, 4, 5 };
+	private final static int[] PRODUCTS_MIN = { 1, 1, 1, 1, 1, 1, 5, 10 };
+	private final static int[] PRODUCTS_MAX = { 2, 2, 10, 1, 1, 1, 15, 15 };
+	private final static int[] DAYS_REQUIRED = { 2, 3, 5, 1, 2, 3, 10, 10 };
+	private final static int[] EXP_GAIN = { 10, 15, 25, 5, 10, 15, 50, 50 }; // 2x
+	private final static int[] CONST_MULTIPLIER = { 100, 100, 100, 100, 100, 100, 100, 100 }; // 100x
 
-	private int buyPrice;
-	private int sellPrice;
-	private int requiredWater;
-	private int requiredFertilizer;
-	private int bonusWaterCap;
-	private int bonusFertilizerCap;
-	private int daysRequired;
-	private int expGain;
-	private int conste;
-	private int maxConst;
-	private int constMultiplier;
-	
-	public Plant(int buyPrice, int requiredWater, int requiredFertilizer, int bonusWaterCap, int daysRequired, int expGain, int conste, int maxConst,
-			int constMultiplier) {
-		this.buyPrice=buyPrice;
-		this.requiredWater=requiredWater;
-		this.requiredFertilizer=requiredFertilizer;
-		this.bonusWaterCap=bonusWaterCap;
-		this.daysRequired=daysRequired;
-		this.expGain=expGain;
-		this.conste=conste;
-		this.maxConst=maxConst;
-		this.constMultiplier=constMultiplier;
+	private int plantId;
+	private int conste;// only set by Gacha
+
+	public Plant(int plantId, int conste) {
+		this.plantId = plantId;
+		this.conste = conste;
 	}
-	
 
-	public int getBuyPrice(){
-		return buyPrice;
-	}
-	
-	public int getExpGain() {
-		return expGain;
-	}
-	
 	public int getBuyPrice() {
-		return buyPrice;
+		return BUY_PRICE[plantId];
 	}
-	
-	public int getSellPrice() {
-		return sellPrice;
+
+	public int getRequiredWater(){
+		return REQUIRED_WATER[plantId];
 	}
-	
+
+	public int getRequiredFertilizer(){
+		return REQUIRED_FERTILIZER[plantId];
+	}
+
+	public int getDaysRequired(){
+		return DAYS_REQUIRED[plantId];
+	}
+
+	public int getExpGain() {
+		return EXP_GAIN[plantId];
+	}
+
+	public int calculateFinalPrice(Player player, int timesWatered, int timesFertilized) {// buying*100, selling plants *100, buying tools*100, using tools*100 
+		int productsProduced = PRODUCTS_MIN[plantId]
+				+ (int) Math.floor(Math.random() * (PRODUCTS_MAX[plantId] - PRODUCTS_MIN[plantId] + 1));
+		int harvestTotal = productsProduced
+				* ((SELL_PRICE[plantId] + conste * CONST_MULTIPLIER[plantId]) + player.getEarningBonus());
+		if (timesWatered > BONUS_WATER_CAP[plantId])
+			timesWatered = BONUS_WATER_CAP[plantId];
+		if (timesFertilized > BONUS_FERTILIZER_CAP[plantId])
+			timesFertilized = BONUS_FERTILIZER_CAP[plantId];
+		int waterBonus = (int) (harvestTotal * 0.2 * (timesWatered - 1));
+		int fertilizerBonus = (int) (harvestTotal * 0.5 * timesFertilized);
+		int finalHarvestPrice = harvestTotal + waterBonus + fertilizerBonus;
+
+		if (isFlower())
+			finalHarvestPrice = (int) (finalHarvestPrice * 1.1);
+		return finalHarvestPrice;
+	}
+
+	public boolean isRoot(){
+		return this.plantId == PLANT_TURNIP || this.plantId == PLANT_CARROT || this.plantId == PLANT_POTATO;
+	}
+
+	public boolean isFlower(){
+		return this.plantId == PLANT_ROSE || this.plantId == PLANT_TULIP || this.plantId == PLANT_SUNFLOWER;
+	}
+
+	public boolean isTree(){
+		return this.plantId == PLANT_MANGO || this.plantId == PLANT_APPLE;
+	}
 }
