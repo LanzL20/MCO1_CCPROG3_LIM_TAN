@@ -25,4 +25,11 @@ public class Player {
 		
 	}
 	
+	public void setObjectCoins(int objectCoins){
+		this.objectCoins=objectCoins;
+	}
+
+	public int getObjectCoins(){
+		return objectCoins;
+	}
 }

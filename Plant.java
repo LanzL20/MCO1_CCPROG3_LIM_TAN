@@ -1,14 +1,14 @@
 
 public class Plant {//note might need to revise cuz it might be better to take from a list of predefined plants and just assign the pre assigned plants to the tiles
 
-	public final int PLANT_TURNIP=1;
-	public final int PLANT_CARROT=2;
-	public final int PLANT_POTATO=3;
-	public final int PLANT_ROSE=4;
-	public final int PLANT_TULIP=5;
-	public final int PLANT_SUNFLOWER=6;
-	public final int PLANT_MANGO=7;
-	public final int PLANT_APPLE=8;
+	public final int PLANT_TURNIP=0;
+	public final int PLANT_CARROT=1;
+	public final int PLANT_POTATO=2;
+	public final int PLANT_ROSE=3;
+	public final int PLANT_TULIP=4;
+	public final int PLANT_SUNFLOWER=5;
+	public final int PLANT_MANGO=6;
+	public final int PLANT_APPLE=7;
 	
 	public final int CONST_MULTIPLIER_TURNIP=1;
 	public final int CONST_MULTIPLIER_CARROT=1;
@@ -18,6 +18,8 @@ public class Plant {//note might need to revise cuz it might be better to take f
 	public final int CONST_MULTIPLIER_SUNFLOWER=1;
 	public final int CONST_MULTIPLIER_MANGO=1;
 	public final int CONST_MULTIPLIER_APPLE=1;
+
+	
 
 	private int buyPrice;
 	private int sellPrice;
@@ -45,6 +47,9 @@ public class Plant {//note might need to revise cuz it might be better to take f
 	}
 	
 
+	public int getBuyPrice(){
+		return buyPrice;
+	}
 	
 	public int getExpGain() {
 		return expGain;
