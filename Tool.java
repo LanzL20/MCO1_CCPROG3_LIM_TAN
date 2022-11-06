@@ -6,7 +6,9 @@ public class Tool {
     public final static int TOOL_PICKAXE = 3;
     public final static int TOOL_SHOVEL = 4;
 
+    private final String[] TOOL_NAME = {"Plow", "Watering Can", "Fertilizer", "Pickaxe", "Shovel"};
     private final int[] USAGE_COST = { 0, 0, 1000, 5000, 700 }; // 100x
+    private final int[] REPLACE_COST = { 10000, 10000, 50000, 200000, 400000 }; // 100x
     private final int[] EXP_GAIN = { 1, 1, 8, 30, 4 }; // 2x
     private final int[][] TOOL_DURABILITY = { { 50, 100, 20, 10, 15 },
             { 75, 150, 30, 15, 25 },
@@ -14,17 +16,17 @@ public class Tool {
             { 150, 300, 60, 30, 45 } };
 
     private int toolId;
-    private int conste; // TODO: make conste add to durability
+    private int conste;
     private int durability;
 
     public Tool(int toolId, int conste) {
         this.toolId = toolId;
         this.conste = conste;
-        this.durability = TOOL_DURABILITY[toolId][conste];
+        this.durability = TOOL_DURABILITY[conste][toolId];
     }
 
     public boolean useTool(Player player) {
-        if (this.durability <= 0)
+        if (this.durability <= 0 || player.getObjectCoins() < USAGE_COST[toolId])
             return false;
         else {
             this.durability--;
@@ -34,9 +36,26 @@ public class Tool {
         }
     }
 
+    public String getToolName(){
+        return TOOL_NAME[toolId];
+    }
+
+    public int getUsageCost(){
+        return USAGE_COST[toolId];
+    }
+
+    public int getReplaceCost(){
+        return REPLACE_COST[toolId];
+    }
+
     public int getConste(){
         return conste;
     }
+
+    public int getDurability(){
+        return durability;
+    }
+
     public boolean isBroken(){
         return this.durability <= 0;
     }

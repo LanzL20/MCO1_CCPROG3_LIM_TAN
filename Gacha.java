@@ -1,4 +1,3 @@
-// GACHA
 
 public class Gacha {
 	public final static int MAX_CONST = 3;
@@ -43,22 +42,25 @@ public class Gacha {
 	}
 
 	public boolean rollBanner(Player player) {
-		if(player.getKusaCoins() >= PULL_COST){
+		if (player.getKusaCoins() >= PULL_COST) {
 			player.deductKusaCoins(PULL_COST);
 			int roll = (int) Math.floor(Math.random() * 4);
-			if(roll < 8){
-				constPlants[roll]++;
-				if(constPlants[roll] > MAX_CONST)
-					constPlants[roll] = MAX_CONST;
-			}else{
-				roll -= 8;
-				constTools[roll]++;
-				if(constTools[roll] > MAX_CONST)
-					constTools[roll] = MAX_CONST;
+			if (banner[roll] < 8) {
+				constPlants[banner[roll]]++;
+				if (constPlants[banner[roll]] > MAX_CONST)
+					constPlants[banner[roll]] = MAX_CONST;
+			} else {
+				constTools[banner[roll] - 8]++;
+				if (constTools[banner[roll] - 8] > MAX_CONST)
+					constTools[banner[roll] - 8] = MAX_CONST;
 			}
 			return true;
 		}
 		return false;
+	}
+
+	public int[] getBanner() {
+		return banner;
 	}
 
 	public int getConstPlant(int plantId) {

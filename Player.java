@@ -1,17 +1,18 @@
 
 public class Player {
 
-	public final int REGISTRATION_BASE = 0;
-	public final int REGISTRATION_REGISTERED = 1;
-	public final int REGISTRATION_DISTINGUISHED = 2;
-	public final int REGISTRATION_LEGENDARY = 3;
+	public final static int REGISTRATION_BASE = 0;
+	public final static int REGISTRATION_REGISTERED = 1;
+	public final static int REGISTRATION_DISTINGUISHED = 2;
+	public final static int REGISTRATION_LEGENDARY = 3;
 
-	private final int[] REG_EXP_REQUIREMENT = { 0, 1000, 2000, 3000 }; // 2x
-	private final int[] BONUS_EARNINGS = { 0, 100, 200, 400 }; // 100x
-	private final int[] SEED_COST_REDUCTION = { 0, 100, 200, 300 }; // 100x
-	private final int[] WATER_BONUS_INC = { 0, 0, 1, 2 };
-	private final int[] FERTILIZER_BONUS_INC = { 0, 0, 0, 1 };
-	private final int[] REGISTRATION_FEE = { -1, 20000, 30000, 40000 }; // 100x
+	private final static String[] REG_NAMES = { "Non-Registered", "Registered", "Distinguished", "Legendary" };
+	private final static int[] REG_EXP_REQUIREMENT = { 0, 1000, 2000, 3000 }; // 2x
+	private final static int[] BONUS_EARNINGS = { 0, 100, 200, 400 }; // 100x
+	private final static int[] SEED_COST_REDUCTION = { 0, 100, 200, 300 }; // 100x
+	private final static int[] WATER_BONUS_INC = { 0, 0, 1, 2 };
+	private final static int[] FERTILIZER_BONUS_INC = { 0, 0, 0, 1 };
+	private final static int[] REGISTRATION_FEE = { -1, 20000, 30000, 40000 }; // 100x
 
 	private int exp;
 	private int objectCoins;
@@ -24,7 +25,7 @@ public class Player {
 	public Player(String name) {
 		this.exp = 0; // 2x
 		this.objectCoins = 10000; // 100x
-		this.kusaCoins = 0;
+		this.kusaCoins = 50;
 		this.registration = REGISTRATION_BASE;
 		this.name = name;
 		this.toolbar = new Tool[5];
@@ -41,7 +42,7 @@ public class Player {
 
 	public boolean upgradeRegistration() {// PLEASE PUT *2 IN ALL EXP GAINS tool use harvesting
 		if (this.registration != REGISTRATION_LEGENDARY && this.objectCoins >= REGISTRATION_FEE[this.registration + 1]
-				&& (int) this.exp >= REG_EXP_REQUIREMENT[this.registration + 1]) {
+				&& (int) this.exp >= this.upgRegLvlReq()) {
 			this.deductObjectCoins(REGISTRATION_FEE[this.registration + 1]);
 			this.registration++;
 			return true;
@@ -49,12 +50,35 @@ public class Player {
 		return false;
 	}
 
-	public void equipTool(int toolId, int conste){
-		this.toolbar[toolId] = new Tool(toolId, conste);
+	public int upgRegFee() {
+		if (this.registration != REGISTRATION_LEGENDARY)
+			return REGISTRATION_FEE[this.registration + 1];
+		else
+			return -1;
+	}
+
+	public int upgRegLvlReq() {
+		if (this.registration != REGISTRATION_LEGENDARY)
+			return REG_EXP_REQUIREMENT[this.registration + 1] / 200;
+		else
+			return -1;
+	}
+
+	public boolean replaceTool(int toolId, int conste) {
+		if (this.toolbar[toolId].getReplaceCost() <= this.objectCoins) {
+			this.toolbar[toolId] = new Tool(toolId, conste);
+			this.deductObjectCoins(this.toolbar[toolId].getReplaceCost());
+			return true;
+		}
+		return false;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public String getRegistrationName() {
+		return REG_NAMES[this.registration];
 	}
 
 	public int getEarningBonus() {
@@ -81,6 +105,14 @@ public class Player {
 		return objectCoins;
 	}
 
+	public int getLevel() {
+		return (int) Math.floor(exp / 200); // Already accounts for the 2x.
+	}
+
+	public int getExp() {
+		return exp;
+	}
+
 	public void addKusaCoins(int coins) {
 		this.kusaCoins += coins;
 	}
@@ -95,10 +127,6 @@ public class Player {
 
 	public void deductObjectCoins(int coins) {
 		this.objectCoins -= coins;
-	}
-
-	public int getRegistration() {
-		return registration;
 	}
 
 	public Tool getTool(int toolId) {

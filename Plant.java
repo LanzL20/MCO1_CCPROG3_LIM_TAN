@@ -11,6 +11,8 @@ public class Plant {// note might need to revise cuz it might be better to take 
 	public final static int PLANT_MANGO = 6;
 	public final static int PLANT_APPLE = 7;
 
+	private final static String[] PLANT_NAMES = { "Turnip", "Carrot", "Potato", "Rose", "Tulips", "Sunflower", "Mango",
+			"Apple" };
 	private final static int[] BUY_PRICE = { 500, 1000, 2000, 5000, 1000, 2000, 10000, 20000 }; // 100x
 	private final static int[] SELL_PRICE = { 600, 900, 300, 500, 900, 1900, 800, 500 }; // (Base Sell Prices) 100x
 	private final static int[] REQUIRED_WATER = { 1, 1, 3, 1, 2, 2, 7, 7 };
@@ -31,19 +33,33 @@ public class Plant {// note might need to revise cuz it might be better to take 
 		this.conste = conste;
 	}
 
+	// TODO: NOT SURE IF OOP
+	public static String getPlantNameStatic(int plantId) {
+		return PLANT_NAMES[plantId];
+	}
+
+	public String getPlantName() {
+		return PLANT_NAMES[plantId];
+	}
+
+	// TODO: NOT SURE IF OOP
+	public static int getBuyPriceStatic(int plantId) {
+		return BUY_PRICE[plantId];
+	}
+
 	public int getBuyPrice() {
 		return BUY_PRICE[plantId];
 	}
 
-	public int getRequiredWater(){
+	public int getRequiredWater() {
 		return REQUIRED_WATER[plantId];
 	}
 
-	public int getRequiredFertilizer(){
+	public int getRequiredFertilizer() {
 		return REQUIRED_FERTILIZER[plantId];
 	}
 
-	public int getDaysRequired(){
+	public int getDaysRequired() {
 		return DAYS_REQUIRED[plantId];
 	}
 
@@ -51,7 +67,9 @@ public class Plant {// note might need to revise cuz it might be better to take 
 		return EXP_GAIN[plantId];
 	}
 
-	public int calculateFinalPrice(Player player, int timesWatered, int timesFertilized) {// buying*100, selling plants *100, buying tools*100, using tools*100 
+	public int calculateFinalPrice(Player player, int timesWatered, int timesFertilized) {// buying*100, selling plants
+																							// *100, buying tools*100,
+																							// using tools*100
 		int productsProduced = PRODUCTS_MIN[plantId]
 				+ (int) Math.floor(Math.random() * (PRODUCTS_MAX[plantId] - PRODUCTS_MIN[plantId] + 1));
 		int harvestTotal = productsProduced
@@ -69,15 +87,15 @@ public class Plant {// note might need to revise cuz it might be better to take 
 		return finalHarvestPrice;
 	}
 
-	public boolean isRoot(){
+	public boolean isRoot() {
 		return this.plantId == PLANT_TURNIP || this.plantId == PLANT_CARROT || this.plantId == PLANT_POTATO;
 	}
 
-	public boolean isFlower(){
+	public boolean isFlower() {
 		return this.plantId == PLANT_ROSE || this.plantId == PLANT_TULIP || this.plantId == PLANT_SUNFLOWER;
 	}
 
-	public boolean isTree(){
+	public boolean isTree() {
 		return this.plantId == PLANT_MANGO || this.plantId == PLANT_APPLE;
 	}
 }
