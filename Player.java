@@ -23,9 +23,8 @@ public class Player {
 	private Tool[] toolbar;
 
 	public Player(String name) {
-		// TODO: CHANGE DEFAULT EXP AND MONEY
-		this.exp = 2000; // 2x
-		this.objectCoins = 10000000; // 100x
+		this.exp = 0; // 2x
+		this.objectCoins = 10000; // 100x
 		this.kusaCoins = 50;
 		this.registration = REGISTRATION_BASE;
 		this.name = name;
