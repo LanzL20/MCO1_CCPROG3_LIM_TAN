@@ -1,3 +1,5 @@
+// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
+
 public class Tool {
 
     public final static int TOOL_PLOW = 0;
