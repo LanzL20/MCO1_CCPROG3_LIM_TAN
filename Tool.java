@@ -8,11 +8,11 @@ public class Tool {
     public final static int TOOL_PICKAXE = 3;
     public final static int TOOL_SHOVEL = 4;
 
-    private final String[] TOOL_NAME = { "Plow", "Watering Can", "Fertilizer", "Pickaxe", "Shovel" };
-    private final int[] USAGE_COST = { 0, 0, 1000, 5000, 700 }; // 100x
-    private final int[] REPLACE_COST = { 10000, 10000, 25000, 15000, 25000 }; // 100x
-    private final int[] EXP_GAIN = { 1, 1, 8, 30, 4 }; // 2x
-    private final int[][] TOOL_DURABILITY = { { 100, 100, 20, 10, 10 },
+    private final static String[] TOOL_NAME = { "Plow", "Watering Can", "Fertilizer", "Pickaxe", "Shovel" };
+    private final static int[] USAGE_COST = { 0, 0, 1000, 5000, 700 }; // 100x
+    private final static int[] REPLACE_COST = { 10000, 10000, 25000, 15000, 25000 }; // 100x
+    private final static int[] EXP_GAIN = { 1, 1, 8, 30, 4 }; // 2x
+    private final static int[][] TOOL_DURABILITY = { { 100, 100, 20, 10, 10 },
             { 75, 150, 30, 15, 25 },
             { 100, 200, 40, 20, 30 },
             { 150, 300, 60, 30, 45 } };
