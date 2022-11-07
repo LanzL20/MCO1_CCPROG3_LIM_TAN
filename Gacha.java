@@ -1,3 +1,4 @@
+// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
 
 public class Gacha {
 	public final static int MAX_CONST = 3;

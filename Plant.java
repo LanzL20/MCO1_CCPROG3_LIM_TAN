@@ -1,3 +1,4 @@
+// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
 
 public class Plant {// note might need to revise cuz it might be better to take from a list of
 					// predefined plants and just assign the pre assigned plants to the tiles

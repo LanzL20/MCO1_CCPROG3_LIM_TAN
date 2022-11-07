@@ -1,3 +1,5 @@
+// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
+
 import java.util.Scanner;
 
 public class Model {
