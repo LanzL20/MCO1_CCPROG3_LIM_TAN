@@ -23,7 +23,7 @@ public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST R
 	private Tool[] toolbar;
 
 	public Player(String name) {
-		this.exp = 3000; // 2x
+		this.exp = 2000; // 2x
 		this.objectCoins = 10000000; // 100x
 		this.kusaCoins = 50;
 		this.registration = REGISTRATION_BASE;
@@ -42,7 +42,7 @@ public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST R
 
 	public boolean upgradeRegistration() {// PLEASE PUT *2 IN ALL EXP GAINS tool use harvesting
 		if (this.registration != REGISTRATION_LEGENDARY && this.objectCoins >= REGISTRATION_FEE[this.registration + 1]
-				&& (int) this.exp >= this.upgRegLvlReq()) {
+				&& (int) this.exp >= this.upgRegExpReq()) {
 			this.deductObjectCoins(REGISTRATION_FEE[this.registration + 1]);
 			this.registration++;
 			return true;
@@ -57,9 +57,9 @@ public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST R
 			return -1;
 	}
 
-	public int upgRegLvlReq() {
+	public int upgRegExpReq() {//
 		if (this.registration != REGISTRATION_LEGENDARY)
-			return REG_EXP_REQUIREMENT[this.registration + 1] / 200;
+			return REG_EXP_REQUIREMENT[this.registration + 1];
 		else
 			return -1;
 	}

@@ -109,7 +109,7 @@ public class Model {
 						}
 						break;
 					case 'H':
-						System.out.println("Level Requirement: " + this.player.upgRegLvlReq());
+						System.out.println("Level Requirement: " + this.player.upgRegExpReq() / 200);
 						System.out.println("ObjectCoins Requirement: " + this.player.upgRegFee() / 100.0 + " OC");
 						if (this.player.upgradeRegistration()) {
 							System.out.println("Successfully upgraded registration!");

@@ -77,7 +77,6 @@ public class Plant {// note might need to revise cuz it might be better to take 
 	public int calculateFinalPrice(Player player, int timesWatered, int timesFertilized) {// buying*100, selling plants
 																							// *100, buying tools*100,
 																							// using tools*100
-																							//TODO:ADDREGISTRATION
 
 		int harvestTotal = this.productsProduced
 				* ((SELL_PRICE[plantId] + conste * CONST_MULTIPLIER[plantId]) + player.getEarningBonus());
