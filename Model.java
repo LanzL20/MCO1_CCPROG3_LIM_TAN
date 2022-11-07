@@ -92,8 +92,8 @@ public class Model {
 					case 'F':
 						int produce;
 						String plantName;
-						produce=t.getPlant().getProductsProduced();
-						plantName=t.getPlant().getPlantName();
+						produce = t.getPlant().getProductsProduced();
+						plantName = t.getPlant().getPlantName();
 						if (t.harvestTile(this.player)) {
 							System.out.println("Successfully harvested tile");
 							System.out.println(produce + " " + plantName + " produced");
@@ -174,8 +174,26 @@ public class Model {
 		System.out.println("You lost! Thank you for playing!");
 	}
 
+	public void advanceDay() {
+		this.dayNo++;
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 5; j++) {
+				this.farm[i][j].advanceDay();
+			}
+		}
+		this.gacha.resetBanner();
+	}
+
+	public Tile[][] getTiles() {
+		return farm;
+	}
+
+	public int getDayNo() {
+		return dayNo;
+	}
+
 	// TODO: Edit/Prototype
-	public void displayStats() {
+	private void displayStats() {
 		System.out.println("\nGood day, Farmer " + this.player.getName() + "! It is now Day " + dayNo + "...\n");
 		System.out.println("ObjectCoins: " + this.player.getObjectCoins() / 100.0);
 		System.out.println("KusaCoins: " + this.player.getKusaCoins());
@@ -213,7 +231,7 @@ public class Model {
 	}
 
 	// TODO: Edit/Prototype
-	public void displayTile() {
+	private void displayTile() {
 		System.out.println("\n");
 		// For the prototype, we're going to use a single tile.
 		Tile t = farm[0][0];
@@ -243,8 +261,7 @@ public class Model {
 	}
 
 	// TODO: Edit/Prototype
-	public void displayChoices() {
-
+	private void displayChoices() {
 		System.out.println("\nWhat would you like to do?");
 		System.out.println("\t(A) Remove Rock using the Pickaxe");
 		System.out.println("\t(B) Plow a Tile");
@@ -258,23 +275,5 @@ public class Model {
 		System.out.println("\t(J) Roll on Banner");
 		System.out.println("\t(K) Redisplay Stats");
 		System.out.println("\t(L) Advance Day");
-	}
-
-	public void advanceDay() {
-		this.dayNo++;
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 5; j++) {
-				this.farm[i][j].advanceDay();
-			}
-		}
-		this.gacha.resetBanner();
-	}
-
-	public Tile[][] getTiles() {
-		return farm;
-	}
-
-	public int getDayNo() {
-		return dayNo;
 	}
 }

@@ -66,6 +66,28 @@ public class Tile {
 		return false;
 	}
 
+	public boolean waterTile(Player player) {
+		if (this.state == STATE_GROWING) {
+			if (player.getTool(Tool.TOOL_WATERING).useTool(player)) {
+				this.timesWatered++;
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public boolean fertilizeTile(Player player) {
+		if (this.state == STATE_GROWING) {
+			if (player.getTool(Tool.TOOL_FERTILIZER).useTool(player)) {
+				this.timesFertilized++;
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
 	public boolean harvestTile(Player player) {
 		if (this.state == STATE_HARVESTABLE) {
 			this.state = STATE_UNPLOWED;
@@ -103,28 +125,6 @@ public class Tile {
 
 	}
 
-	public boolean waterTile(Player player) {
-		if (this.state == STATE_GROWING) {
-			if (player.getTool(Tool.TOOL_WATERING).useTool(player)) {
-				this.timesWatered++;
-				return true;
-			}
-			return false;
-		}
-		return false;
-	}
-
-	public boolean fertilizeTile(Player player) {
-		if (this.state == STATE_GROWING) {
-			if (player.getTool(Tool.TOOL_FERTILIZER).useTool(player)) {
-				this.timesFertilized++;
-				return true;
-			}
-			return false;
-		}
-		return false;
-	}
-
 	public void advanceDay() {
 		this.daysPast++;
 		if (this.state == STATE_GROWING) {
@@ -147,16 +147,16 @@ public class Tile {
 		this.daysPast = 0;
 	}
 
-	public int getTimesWatered(){
+	public int getState() {
+		return state;
+	}
+
+	public int getTimesWatered() {
 		return this.timesWatered;
 	}
 
-	public int getTimesFertilized(){
+	public int getTimesFertilized() {
 		return this.timesFertilized;
-	}
-
-	public int getState() {
-		return state;
 	}
 
 	public Plant getPlant() {

@@ -1,5 +1,5 @@
 
-public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST REDUCTION, REPAIR TOOLS
+public class Player {
 
 	public final static int REGISTRATION_BASE = 0;
 	public final static int REGISTRATION_REGISTERED = 1;
@@ -23,6 +23,7 @@ public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST R
 	private Tool[] toolbar;
 
 	public Player(String name) {
+		// TODO: CHANGE DEFAULT EXP AND MONEY
 		this.exp = 2000; // 2x
 		this.objectCoins = 10000000; // 100x
 		this.kusaCoins = 50;
@@ -36,32 +37,14 @@ public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST R
 		this.toolbar[Tool.TOOL_SHOVEL] = new Tool(Tool.TOOL_SHOVEL, 0);
 	}
 
-	public void increaseExp(int exp) {
-		this.exp += exp;
-	}
-
-	public boolean upgradeRegistration() {// PLEASE PUT *2 IN ALL EXP GAINS tool use harvesting
-		if (this.registration != REGISTRATION_LEGENDARY && this.objectCoins >= REGISTRATION_FEE[this.registration + 1]
-				&& (int) this.exp >= this.upgRegExpReq()) {
+	public boolean upgradeRegistration() {
+		if (this.registration != REGISTRATION_LEGENDARY && (int) this.exp >= this.upgRegExpReq()
+				&& this.objectCoins >= upgRegFee()) {
 			this.deductObjectCoins(REGISTRATION_FEE[this.registration + 1]);
 			this.registration++;
 			return true;
 		}
 		return false;
-	}
-
-	public int upgRegFee() {
-		if (this.registration != REGISTRATION_LEGENDARY)
-			return REGISTRATION_FEE[this.registration + 1];
-		else
-			return -1;
-	}
-
-	public int upgRegExpReq() {//
-		if (this.registration != REGISTRATION_LEGENDARY)
-			return REG_EXP_REQUIREMENT[this.registration + 1];
-		else
-			return -1;
 	}
 
 	public boolean replaceTool(int toolId, int conste) {
@@ -75,6 +58,10 @@ public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST R
 
 	public String getName() {
 		return name;
+	}
+
+	public int getExp() {
+		return exp;
 	}
 
 	public String getRegistrationName() {
@@ -97,28 +84,38 @@ public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST R
 		return FERTILIZER_BONUS_INC[this.registration];
 	}
 
-	public int getKusaCoins() {
-		return kusaCoins;
+	public int upgRegExpReq() {
+		if (this.registration != REGISTRATION_LEGENDARY)
+			return REG_EXP_REQUIREMENT[this.registration + 1];
+		else
+			return -1;
+	}
+
+	public int upgRegFee() {
+		if (this.registration != REGISTRATION_LEGENDARY)
+			return REGISTRATION_FEE[this.registration + 1];
+		else
+			return -1;
 	}
 
 	public int getObjectCoins() {
 		return objectCoins;
 	}
 
+	public int getKusaCoins() {
+		return kusaCoins;
+	}
+
 	public int getLevel() {
 		return (int) Math.floor(exp / 200); // Already accounts for the 2x.
 	}
 
-	public int getExp() {
-		return exp;
+	public Tool getTool(int toolId) {
+		return toolbar[toolId];
 	}
 
-	public void addKusaCoins(int coins) {
-		this.kusaCoins += coins;
-	}
-
-	public void deductKusaCoins(int coins) {
-		this.kusaCoins -= coins;
+	public void increaseExp(int exp) {
+		this.exp += exp;
 	}
 
 	public void addObjectCoins(int coins) {
@@ -129,8 +126,12 @@ public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST R
 		this.objectCoins -= coins;
 	}
 
-	public Tool getTool(int toolId) {
-		return toolbar[toolId];
+	public void addKusaCoins(int coins) {
+		this.kusaCoins += coins;
+	}
+
+	public void deductKusaCoins(int coins) {
+		this.kusaCoins -= coins;
 	}
 
 }

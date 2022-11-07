@@ -6,7 +6,7 @@ public class Tool {
     public final static int TOOL_PICKAXE = 3;
     public final static int TOOL_SHOVEL = 4;
 
-    private final String[] TOOL_NAME = {"Plow", "Watering Can", "Fertilizer", "Pickaxe", "Shovel"};
+    private final String[] TOOL_NAME = { "Plow", "Watering Can", "Fertilizer", "Pickaxe", "Shovel" };
     private final int[] USAGE_COST = { 0, 0, 1000, 5000, 700 }; // 100x
     private final int[] REPLACE_COST = { 10000, 10000, 25000, 15000, 25000 }; // 100x
     private final int[] EXP_GAIN = { 1, 1, 8, 30, 4 }; // 2x
@@ -36,27 +36,27 @@ public class Tool {
         }
     }
 
-    public String getToolName(){
+    public String getToolName() {
         return TOOL_NAME[toolId];
     }
 
-    public int getUsageCost(){
+    public int getUsageCost() {
         return USAGE_COST[toolId];
     }
 
-    public int getReplaceCost(){
+    public int getReplaceCost() {
         return REPLACE_COST[toolId];
     }
 
-    public int getConste(){
+    public int getConste() {
         return conste;
     }
 
-    public int getDurability(){
+    public int getDurability() {
         return durability;
     }
 
-    public boolean isBroken(){
+    public boolean isBroken() {
         return this.durability <= 0;
     }
 }

@@ -26,35 +26,49 @@ public class Plant {// note might need to revise cuz it might be better to take 
 	private final static int[] CONST_MULTIPLIER = { 100, 100, 100, 100, 100, 100, 100, 100 }; // 100x
 
 	private int plantId;
-	private int conste;// only set by Gacha
+	private int conste;
 	private int productsProduced;
 
 	public Plant(int plantId, int conste) {
 		this.plantId = plantId;
 		this.conste = conste;
 		this.productsProduced = ((int) Math.floor(Math.random() * (PRODUCTS_MAX[plantId] - PRODUCTS_MIN[plantId] + 1)))
-				+ PRODUCTS_MIN[plantId];// hatdog
+				+ PRODUCTS_MIN[plantId];
 	}
 
-	// TODO: NOT SURE IF OOP
-	public static String getPlantNameStatic(int plantId) {
-		return PLANT_NAMES[plantId];
+	public int calculateFinalPrice(Player player, int timesWatered, int timesFertilized) {
+		int harvestTotal = this.productsProduced
+				* ((SELL_PRICE[plantId] + conste * CONST_MULTIPLIER[plantId]) + player.getEarningBonus());
+		if (timesWatered > BONUS_WATER_CAP[plantId] + player.getWaterBonusInc())
+			timesWatered = BONUS_WATER_CAP[plantId] + player.getWaterBonusInc();
+		if (timesFertilized > BONUS_FERTILIZER_CAP[plantId] + player.getFertilizerBonusInc())
+			timesFertilized = BONUS_FERTILIZER_CAP[plantId] + player.getFertilizerBonusInc();
+		int waterBonus = (int) (harvestTotal * 0.2 * (timesWatered - 1));
+		int fertilizerBonus = (int) (harvestTotal * 0.5 * timesFertilized);
+		int finalHarvestPrice = harvestTotal + waterBonus + fertilizerBonus;
+
+		if (isFlower())
+			finalHarvestPrice = (int) (finalHarvestPrice * 1.1);
+		return finalHarvestPrice;
+	}
+
+	public int getPlantId() {
+		return plantId;
 	}
 
 	public String getPlantName() {
 		return PLANT_NAMES[plantId];
 	}
 
-	// TODO: NOT SURE IF OOP
-	public static int getBuyPriceStatic(int plantId) {
-		return BUY_PRICE[plantId];
-	}
-
-	public int getPlantId(){
-		return plantId;
+	public static String getPlantNameStatic(int plantId) {
+		return PLANT_NAMES[plantId];
 	}
 
 	public int getBuyPrice() {
+		return BUY_PRICE[plantId];
+	}
+
+	public static int getBuyPriceStatic(int plantId) {
 		return BUY_PRICE[plantId];
 	}
 
@@ -74,23 +88,8 @@ public class Plant {// note might need to revise cuz it might be better to take 
 		return EXP_GAIN[plantId];
 	}
 
-	public int calculateFinalPrice(Player player, int timesWatered, int timesFertilized) {// buying*100, selling plants
-																							// *100, buying tools*100,
-																							// using tools*100
-
-		int harvestTotal = this.productsProduced
-				* ((SELL_PRICE[plantId] + conste * CONST_MULTIPLIER[plantId]) + player.getEarningBonus());
-		if (timesWatered > BONUS_WATER_CAP[plantId] + player.getWaterBonusInc())
-			timesWatered = BONUS_WATER_CAP[plantId] + player.getWaterBonusInc();
-		if (timesFertilized > BONUS_FERTILIZER_CAP[plantId] + player.getFertilizerBonusInc())
-			timesFertilized = BONUS_FERTILIZER_CAP[plantId] + player.getFertilizerBonusInc();
-		int waterBonus = (int) (harvestTotal * 0.2 * (timesWatered - 1));
-		int fertilizerBonus = (int) (harvestTotal * 0.5 * timesFertilized);
-		int finalHarvestPrice = harvestTotal + waterBonus + fertilizerBonus;
-
-		if (isFlower())
-			finalHarvestPrice = (int) (finalHarvestPrice * 1.1);
-		return finalHarvestPrice;
+	public int getProductsProduced() {
+		return this.productsProduced;
 	}
 
 	public boolean isRoot() {
@@ -103,9 +102,5 @@ public class Plant {// note might need to revise cuz it might be better to take 
 
 	public boolean isTree() {
 		return this.plantId == PLANT_MANGO || this.plantId == PLANT_APPLE;
-	}
-
-	public int getProductsProduced(){
-		return this.productsProduced;
 	}
 }

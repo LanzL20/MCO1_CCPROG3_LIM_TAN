@@ -59,15 +59,15 @@ public class Gacha {
 		return false;
 	}
 
-	public int[] getBanner() {
-		return banner;
-	}
-
 	public int getConstPlant(int plantId) {
 		return constPlants[plantId];
 	}
 
 	public int getConstTool(int toolId) {
 		return constTools[toolId];
+	}
+
+	public int[] getBanner() {
+		return banner;
 	}
 }
