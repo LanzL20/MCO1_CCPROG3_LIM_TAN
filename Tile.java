@@ -56,7 +56,7 @@ public class Tile {
 			this.plant = new Plant(plantId, conste);
 			if (this.plant.getBuyPrice() <= player.getObjectCoins()) {
 				this.state = STATE_GROWING;
-				player.deductObjectCoins(this.plant.getBuyPrice());
+				player.deductObjectCoins(this.plant.getBuyPrice() - player.getSeedCostReduction());
 				return true;
 			} else {
 				this.resetPlant();
@@ -70,6 +70,7 @@ public class Tile {
 		if (this.state == STATE_HARVESTABLE) {
 			this.state = STATE_UNPLOWED;
 			player.addObjectCoins(this.plant.calculateFinalPrice(player, this.timesWatered, this.timesFertilized));
+			player.increaseExp(this.plant.getExpGain());
 			this.resetPlant();
 			return true;
 		} else {

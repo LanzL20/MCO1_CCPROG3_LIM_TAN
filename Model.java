@@ -90,8 +90,13 @@ public class Model {
 						}
 						break;
 					case 'F':
+						int produce;
+						String plantName;
+						produce=t.getPlant().getProductsProduced();
+						plantName=t.getPlant().getPlantName();
 						if (t.harvestTile(this.player)) {
 							System.out.println("Successfully harvested tile");
+							System.out.println(produce + " " + plantName + " produced");
 						} else {
 							System.out.println("Unsuccessfully harvested tile...");
 						}

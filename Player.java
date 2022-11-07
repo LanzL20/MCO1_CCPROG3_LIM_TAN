@@ -1,5 +1,5 @@
 
-public class Player {
+public class Player {//TODO:TEST FERTILIZER BONUS AND WATERBONUS AND SEED COST REDUCTION, REPAIR TOOLS
 
 	public final static int REGISTRATION_BASE = 0;
 	public final static int REGISTRATION_REGISTERED = 1;
@@ -23,8 +23,8 @@ public class Player {
 	private Tool[] toolbar;
 
 	public Player(String name) {
-		this.exp = 0; // 2x
-		this.objectCoins = 10000; // 100x
+		this.exp = 3000; // 2x
+		this.objectCoins = 10000000; // 100x
 		this.kusaCoins = 50;
 		this.registration = REGISTRATION_BASE;
 		this.name = name;

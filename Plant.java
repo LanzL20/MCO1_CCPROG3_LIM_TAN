@@ -13,7 +13,7 @@ public class Plant {// note might need to revise cuz it might be better to take 
 
 	private final static String[] PLANT_NAMES = { "Turnip", "Carrot", "Potato", "Rose", "Tulips", "Sunflower", "Mango",
 			"Apple" };
-	private final static int[] BUY_PRICE = { 500, 1000, 2000, 5000, 1000, 2000, 10000, 20000 }; // 100x
+	private final static int[] BUY_PRICE = { 500, 1000, 2000, 500, 1000, 2000, 10000, 20000 }; // 100x
 	private final static int[] SELL_PRICE = { 600, 900, 300, 500, 900, 1900, 800, 500 }; // (Base Sell Prices) 100x
 	private final static int[] REQUIRED_WATER = { 1, 1, 3, 1, 2, 2, 7, 7 };
 	private final static int[] REQUIRED_FERTILIZER = { 0, 0, 1, 0, 0, 1, 4, 5 };
@@ -27,10 +27,13 @@ public class Plant {// note might need to revise cuz it might be better to take 
 
 	private int plantId;
 	private int conste;// only set by Gacha
+	private int productsProduced;
 
 	public Plant(int plantId, int conste) {
 		this.plantId = plantId;
 		this.conste = conste;
+		this.productsProduced = ((int) Math.floor(Math.random() * (PRODUCTS_MAX[plantId] - PRODUCTS_MIN[plantId] + 1)))
+				+ PRODUCTS_MIN[plantId];// hatdog
 	}
 
 	// TODO: NOT SURE IF OOP
@@ -45,6 +48,10 @@ public class Plant {// note might need to revise cuz it might be better to take 
 	// TODO: NOT SURE IF OOP
 	public static int getBuyPriceStatic(int plantId) {
 		return BUY_PRICE[plantId];
+	}
+
+	public int getPlantId(){
+		return plantId;
 	}
 
 	public int getBuyPrice() {
@@ -70,14 +77,14 @@ public class Plant {// note might need to revise cuz it might be better to take 
 	public int calculateFinalPrice(Player player, int timesWatered, int timesFertilized) {// buying*100, selling plants
 																							// *100, buying tools*100,
 																							// using tools*100
-		int productsProduced = PRODUCTS_MIN[plantId]
-				+ (int) Math.floor(Math.random() * (PRODUCTS_MAX[plantId] - PRODUCTS_MIN[plantId] + 1));
-		int harvestTotal = productsProduced
+																							//TODO:ADDREGISTRATION
+
+		int harvestTotal = this.productsProduced
 				* ((SELL_PRICE[plantId] + conste * CONST_MULTIPLIER[plantId]) + player.getEarningBonus());
-		if (timesWatered > BONUS_WATER_CAP[plantId])
-			timesWatered = BONUS_WATER_CAP[plantId];
-		if (timesFertilized > BONUS_FERTILIZER_CAP[plantId])
-			timesFertilized = BONUS_FERTILIZER_CAP[plantId];
+		if (timesWatered > BONUS_WATER_CAP[plantId] + player.getWaterBonusInc())
+			timesWatered = BONUS_WATER_CAP[plantId] + player.getWaterBonusInc();
+		if (timesFertilized > BONUS_FERTILIZER_CAP[plantId] + player.getFertilizerBonusInc())
+			timesFertilized = BONUS_FERTILIZER_CAP[plantId] + player.getFertilizerBonusInc();
 		int waterBonus = (int) (harvestTotal * 0.2 * (timesWatered - 1));
 		int fertilizerBonus = (int) (harvestTotal * 0.5 * timesFertilized);
 		int finalHarvestPrice = harvestTotal + waterBonus + fertilizerBonus;
@@ -97,5 +104,9 @@ public class Plant {// note might need to revise cuz it might be better to take 
 
 	public boolean isTree() {
 		return this.plantId == PLANT_MANGO || this.plantId == PLANT_APPLE;
+	}
+
+	public int getProductsProduced(){
+		return this.productsProduced;
 	}
 }
