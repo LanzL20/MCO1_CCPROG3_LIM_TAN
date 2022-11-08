@@ -2,6 +2,11 @@
 
 import java.util.Scanner;
 
+/**
+ * The Model class is essentialy the main class that integrates everything in
+ * the model, including the interactions between the player, the farm, the
+ * plants, the tools, the gacha, and many more.
+ */
 public class Model {
 
 	private int dayNo;
@@ -13,10 +18,19 @@ public class Model {
 	// TODO: Edit/Prototype
 	private Scanner sc;
 
+	/**
+	 * This is the main method that starts the prototype program.
+	 */
 	public static void main(String[] args) {
 		new Model(null);
 	}
 
+	/**
+	 * This constructor creates a Model object, initializing the farm, the player
+	 * (with a specified name), and the gacha handler.
+	 * 
+	 * @param name the name of the player to be created (not currently used)
+	 */
 	public Model(String name) {
 		this.dayNo = 1;
 		this.farm = new Tile[10][5];
@@ -176,6 +190,10 @@ public class Model {
 		System.out.println("You lost! Thank you for playing!");
 	}
 
+	/**
+	 * This method simulates the action of progressing a day, appropriately updating
+	 * all tiles on the farm and reseting the gacha banner as intended.
+	 */
 	public void advanceDay() {
 		this.dayNo++;
 		for (int i = 0; i < 10; i++) {
@@ -186,15 +204,28 @@ public class Model {
 		this.gacha.resetBanner();
 	}
 
+	/**
+	 * This method returns all tiles on the farm.
+	 * 
+	 * @return all the tiles on the farm currently.
+	 */
 	public Tile[][] getTiles() {
 		return farm;
 	}
 
+	/**
+	 * This method returns the current day number.
+	 * 
+	 * @return the current day number the player is at
+	 */
 	public int getDayNo() {
 		return dayNo;
 	}
 
 	// TODO: Edit/Prototype
+	/**
+	 * This method displays the current stats of the player and the gacha.
+	 */
 	private void displayStats() {
 		System.out.println("\nGood day, Farmer " + this.player.getName() + "! It is now Day " + dayNo + "...\n");
 		System.out.println("ObjectCoins: " + this.player.getObjectCoins() / 100.0);
@@ -233,6 +264,10 @@ public class Model {
 	}
 
 	// TODO: Edit/Prototype
+	/**
+	 * This method displays the current state of the first tile (for the purposes of
+	 * the prototype).
+	 */
 	private void displayTile() {
 		System.out.println("\n");
 		// For the prototype, we're going to use a single tile.
@@ -263,6 +298,9 @@ public class Model {
 	}
 
 	// TODO: Edit/Prototype
+	/**
+	 * This method displays the choices the player can take in the prototype.
+	 */
 	private void displayChoices() {
 		System.out.println("\nWhat would you like to do?");
 		System.out.println("\t(A) Remove Rock using the Pickaxe");
