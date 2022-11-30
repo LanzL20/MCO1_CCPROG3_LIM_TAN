@@ -1,7 +1,5 @@
 // Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
 
-import java.util.Scanner;
-
 public class Model {
 
 	private int dayNo;
@@ -9,13 +7,6 @@ public class Model {
 	private Player player;
 	private Gacha gacha;
 	private boolean isLost;
-
-	// TODO: Edit/Prototype
-	private Scanner sc;
-
-	public static void main(String[] args) {
-		new Model(null);
-	}
 
 	public Model(String name) {
 		this.dayNo = 1;
@@ -25,21 +16,67 @@ public class Model {
 				farm[i][j] = new Tile();
 			}
 		}
+		this.player = new Player(name);
+		this.gacha = new Gacha();
+		this.isLost = false;
+	}
 
-		// TODO: Edit/Prototype
+	public void advanceDay() {
+		this.dayNo++;
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 5; j++) {
+				this.farm[i][j].advanceDay();
+			}
+		}
+		this.gacha.resetBanner();
+	}
+
+	public Tile[][] getTiles() {
+		return farm;
+	}
+
+	public int getDayNo() {
+		return dayNo;
+	}
+
+	public Player getPlayer(){
+		return player;
+	}
+}
+/* Code/Prototype
+
+	private Scanner sc;
 		this.sc = new Scanner(System.in);
 		System.out.println("What is your name?");
 		name = sc.nextLine();
 
-		this.player = new Player(name);
-		this.gacha = new Gacha();
-		this.isLost = false;
 
-		// TODO: Edit/Prototype
 		Tile t = farm[0][0];
 		t.addRock();
 
-		while (!isLost) {
+			// Check for losing by first checking if the player still has enough money...
+			if (this.player.getObjectCoins() < 500) {
+				// Then checking if the farm is currently desolate.
+				boolean farmEmpty = true;
+				for (int i = 0; i < 10; i++) {
+					for (int j = 0; j < 5; j++) {
+						if (farm[i][j].getState() == Tile.STATE_GROWING
+								|| farm[i][j].getState() == Tile.STATE_HARVESTABLE) {
+							farmEmpty = false;
+							break;
+						}
+					}
+				}
+				// If both losing conditions are satisfied, then end the game.
+				if (farmEmpty) {
+					this.isLost = true;
+				}
+			}
+		}
+
+		System.out.println("You lost! Thank you for playing!");
+
+while (!isLost) {
 
 			this.displayStats();
 			this.displayTile();
@@ -153,48 +190,6 @@ public class Model {
 			this.advanceDay();
 			System.out.println("Progressing to Day " + dayNo);
 
-			// Check for losing by first checking if the player still has enough money...
-			if (this.player.getObjectCoins() < 500) {
-				// Then checking if the farm is currently desolate.
-				boolean farmEmpty = true;
-				for (int i = 0; i < 10; i++) {
-					for (int j = 0; j < 5; j++) {
-						if (farm[i][j].getState() == Tile.STATE_GROWING
-								|| farm[i][j].getState() == Tile.STATE_HARVESTABLE) {
-							farmEmpty = false;
-							break;
-						}
-					}
-				}
-				// If both losing conditions are satisfied, then end the game.
-				if (farmEmpty) {
-					this.isLost = true;
-				}
-			}
-		}
-
-		System.out.println("You lost! Thank you for playing!");
-	}
-
-	public void advanceDay() {
-		this.dayNo++;
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 5; j++) {
-				this.farm[i][j].advanceDay();
-			}
-		}
-		this.gacha.resetBanner();
-	}
-
-	public Tile[][] getTiles() {
-		return farm;
-	}
-
-	public int getDayNo() {
-		return dayNo;
-	}
-
-	// TODO: Edit/Prototype
 	private void displayStats() {
 		System.out.println("\nGood day, Farmer " + this.player.getName() + "! It is now Day " + dayNo + "...\n");
 		System.out.println("ObjectCoins: " + this.player.getObjectCoins() / 100.0);
@@ -232,7 +227,6 @@ public class Model {
 		}
 	}
 
-	// TODO: Edit/Prototype
 	private void displayTile() {
 		System.out.println("\n");
 		// For the prototype, we're going to use a single tile.
@@ -262,7 +256,6 @@ public class Model {
 		}
 	}
 
-	// TODO: Edit/Prototype
 	private void displayChoices() {
 		System.out.println("\nWhat would you like to do?");
 		System.out.println("\t(A) Remove Rock using the Pickaxe");
@@ -278,4 +271,4 @@ public class Model {
 		System.out.println("\t(K) Redisplay Stats");
 		System.out.println("\t(L) Advance Day");
 	}
-}
+ */
