@@ -58,6 +58,7 @@ public class View {
         this.startButton.setText("Let's start!");
         this.startButton.setPreferredSize(new Dimension(100, 30));
         this.startFrame.add(startButton);
+        
 
         this.startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

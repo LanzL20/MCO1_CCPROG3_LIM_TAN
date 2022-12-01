@@ -12,7 +12,6 @@ public class Controller {
     }
 
     public Controller() {
-        this.model = new Model(null);
         this.view = new View();
 
         this.view.setStartButtonActionListener(new ActionListener() {
