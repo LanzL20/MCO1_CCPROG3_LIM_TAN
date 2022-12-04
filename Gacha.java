@@ -61,10 +61,9 @@ public class Gacha {
 	 * KusaCoins and increasing the constellations based on chance.
 	 * 
 	 * @param player Player object where we deduct the cost of using rollBanner
-	 * @return true if the player was able to successfully roll the banner and get a
-	 *         constelation for a plant/tool and false if not
+	 * @return if successful, the plant/tool const gotten; if not, -1
 	 */
-	public boolean rollBanner(Player player) {
+	public int rollBanner(Player player) {
 		if (player.getKusaCoins() >= PULL_COST) {
 			player.deductKusaCoins(PULL_COST);
 			int roll = (int) Math.floor(Math.random() * 4);
@@ -77,9 +76,9 @@ public class Gacha {
 				if (constTools[banner[roll] - 8] > MAX_CONST)
 					constTools[banner[roll] - 8] = MAX_CONST;
 			}
-			return true;
+			return banner[roll];
 		}
-		return false;
+		return -1;
 	}
 
 	/**

@@ -87,21 +87,53 @@ public class Tile {
 	 * @param player  the Player object currently planting a seed
 	 * @param coste   the constellation value of the plant to be planted
 	 * @return a boolean value indicating whether or not the planting was successful
+	 *         TODO update javadoc
 	 */
-	public boolean plantSeed(int plantId, Player player, int conste) {
+	public boolean plantSeed(int plantId, Player player, int conste, int x, int y, Tile farm[][]) {
+		System.out.println("x: " + x + " y: " + y);
 		if (this.state == STATE_PLOWED && (plantId >= 0 && plantId <= 7)) {
 			this.resetPlant();
 			this.plant = new Plant(plantId, conste);
 			if (this.plant.getBuyPrice() <= player.getObjectCoins()) {
-				this.state = STATE_GROWING;
-				player.deductObjectCoins(this.plant.getBuyPrice() - player.getSeedCostReduction());
-				return true;
+				if ((this.plant.isTree() && !(x == 0 || x == 9 || y == 0 || y == 4)) || !this.plant.isTree()) {
+					if (!this.plant.isTree()) {
+						this.state = STATE_GROWING;
+						player.deductObjectCoins(this.plant.getBuyPrice() - player.getSeedCostReduction());
+						return true;
+					}
+
+					else {
+						boolean plantFound = false;
+						for (int i = -1; i < 2; i++) {
+							for (int j = 1; j > -2; j--) {
+								if (!(farm[x - i][y - j].getState() == STATE_UNPLOWED || farm[x - i][y - j].getState() == STATE_PLOWED) && !(x - i == x && y - j == y)) {
+									plantFound = true;
+									break;
+								}
+							}
+							if(plantFound)
+								break;
+						}
+						if (!plantFound) {
+							this.state = STATE_GROWING;
+							player.deductObjectCoins(this.plant.getBuyPrice() - player.getSeedCostReduction());
+							return true;
+						} else {
+							this.resetPlant();
+							return false;
+						}
+					}
+				}
 			} else {
 				this.resetPlant();
 				return false;
 			}
+		} else {
+			this.resetPlant();
+			return false;
 		}
 		return false;
+
 	}
 
 	/**

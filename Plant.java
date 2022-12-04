@@ -21,6 +21,9 @@ public class Plant {
 
 	private final static String[] PLANT_NAMES = { "Turnip", "Carrot", "Potato", "Rose", "Tulips", "Sunflower", "Mango",
 			"Apple" };
+
+	private final static String[] PLANT_IMAGE = { "Plant-Turnip.png", "Plant-Carrot.png", "Plant-Potato.png","Plant-Rose.png","Plant-Tulips.png",
+												"Plant-Sunflower.png","Plant-Mango.png","Plant-Apple.png"};
 	private final static int[] BUY_PRICE = { 500, 1000, 2000, 500, 1000, 2000, 10000, 20000 }; // 100x to avoid
 																								// truncation of
 																								// floating point
@@ -40,7 +43,7 @@ public class Plant {
 	private final static int[] CONST_MULTIPLIER = { 100, 100, 100, 100, 100, 100, 100, 100 }; // 100x to avoid
 																								// truncation of
 																								// floating point
-																								// numbers
+																								// numbers TODO: balance
 
 	private int plantId;
 	private int conste;
@@ -103,6 +106,10 @@ public class Plant {
 
 	public String getPlantName() {
 		return PLANT_NAMES[plantId];
+	}
+
+	public static String getPlantImageStatic(int plantId){
+		return PLANT_IMAGE[plantId];
 	}
 
 	/**

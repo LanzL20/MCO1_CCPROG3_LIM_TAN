@@ -34,9 +34,9 @@ public class Player {
 	 * @param name the name of the player to be created
 	 */
 	public Player(String name) {
-		this.exp = 100000; // 2x
-		this.objectCoins = 10000000; // 100x
-		this.kusaCoins = 50;
+		this.exp = 10000; // 2x
+		this.objectCoins = 1000000; // 100x
+		this.kusaCoins = 5000;
 		this.registration = REGISTRATION_BASE;
 		this.name = name;
 		this.toolbar = new Tool[5];

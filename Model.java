@@ -30,7 +30,7 @@ public class Model {
 		this.player = new Player(name);
 		this.gacha = new Gacha();
 		this.isLost = false;
-	}
+	}// TODO: add check for tree
 
 	/**
 	 * This method simulates the action of progressing a day, appropriately updating
@@ -47,15 +47,6 @@ public class Model {
 	}
 
 	/**
-	 * This method returns all tiles on the farm.
-	 * 
-	 * @return all the tiles on the farm currently.
-	 */
-	public Tile[][] getTiles() {
-		return farm;
-	}
-
-	/**
 	 * This method returns the current day number.
 	 * 
 	 * @return the current day number the player is at
@@ -65,12 +56,25 @@ public class Model {
 	}
 
 	/**
+	 * This method returns all tiles on the farm.
+	 * 
+	 * @return all the tiles on the farm currently.
+	 */
+	public Tile[][] getTiles() {
+		return farm;
+	}
+
+	/**
 	 * This method returns the player as a Player object.
 	 * 
 	 * @return the Player object containing the player's stats and tools
 	 */
 	public Player getPlayer() {
 		return player;
+	}
+
+	public Gacha getGacha(){
+		return gacha;
 	}
 }
 /*

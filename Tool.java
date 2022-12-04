@@ -24,6 +24,8 @@ public class Tool {
             { 75, 150, 30, 15, 25 },
             { 100, 200, 40, 20, 30 },
             { 150, 300, 60, 30, 45 } };
+    private final static String[] TOOL_IMAGE = { "Tool-Plow.png", "Tool-Watering.png", "Tool-Fertilizer.png",
+            "Tool-Pickaxe.png", "Tool-Shovel.png" };
 
     private int toolId;
     private int conste;
@@ -63,6 +65,10 @@ public class Tool {
      * @return the name of the tool as a String
      */
     public String getToolName() {
+        return TOOL_NAME[toolId];
+    }
+
+    public static String getToolNameStatic(int toolId){
         return TOOL_NAME[toolId];
     }
 
@@ -110,5 +116,9 @@ public class Tool {
      */
     public boolean isBroken() {
         return this.durability <= 0;
+    }
+
+    public static String getToolImageStatic(int toolId){
+        return TOOL_IMAGE[toolId];
     }
 }
