@@ -9,6 +9,10 @@ public class Controller {
     private View view;
     private String playerName;
     private int selectedTool = 0;
+    //TODO:WITHERING
+    //TODO:REMOVE PLANT WHEN SHOVEL
+    //
+
 
     public static void main(String[] args) {
         // Instantiates the only Controller object instance. // TODO GAme over
@@ -178,6 +182,9 @@ public class Controller {
                 }
             };
         }
+        /**
+         * Action listener for the Next day Button on the bottom right.
+         */
         ActionListener nextDayListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -185,6 +192,9 @@ public class Controller {
                 // TODO INTERnal docu
                 model.advanceDay();
                 view.addToTextPanel("Advancing to Day " + model.getDayNo() + "...");
+                for(int i=0;i<50;i++){
+                    
+                }
                 view.updateGachaBanner(model.getGacha().getBanner());
             }
         };

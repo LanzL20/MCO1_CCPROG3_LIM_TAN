@@ -90,7 +90,6 @@ public class Tile {
 	 *         TODO update javadoc
 	 */
 	public boolean plantSeed(int plantId, Player player, int conste, int x, int y, Tile farm[][]) {
-		System.out.println("x: " + x + " y: " + y);
 		if (this.state == STATE_PLOWED && (plantId >= 0 && plantId <= 7)) {
 			this.resetPlant();
 			this.plant = new Plant(plantId, conste);
