@@ -261,6 +261,9 @@ public class Controller {
                 }
             };
         }
+        /**
+         * Action listener for the Next day Button on the bottom right.
+         */
         ActionListener nextDayListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

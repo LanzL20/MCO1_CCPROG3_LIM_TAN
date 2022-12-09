@@ -1,4 +1,4 @@
-//TODO ARROW BUTTONS PROMOTE SCROLL NEXT DAY
+
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,7 +16,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class View {
 
@@ -421,7 +420,6 @@ public class View {
         JButton plantButtons[];
         plantButtons = new JButton[9];
         for (int i = 0; i < 9; i++) {
-            // TODO to 9 once gacha plant
             plantButtons[i] = new JButton();
             plantButtons[i].addActionListener(plantingListeners[i]);
             plantPanel.add(plantButtons[i]);

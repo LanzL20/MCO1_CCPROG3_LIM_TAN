@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 // Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
 
@@ -193,7 +192,7 @@ public class Model {
 				"What do you call a jungle where the animals talk about current events? A topical rainforest!"));
 		this.events[2].add(new JokeEvent("There's tulips! Yours and mine!"));
 	}
-	// TODO: add events and calamities TODO update UML
+	// TODO update UML
 
 	/**
 	 * This method simulates the action of progressing a day, appropriately updating

@@ -92,7 +92,6 @@ public class Tile {
 	 * @return a boolean value indicating whether or not the planting was successful
 	 */
 	public boolean plantSeed(int plantId, Player player, int conste, int x, int y, Tile farm[][]) {
-		System.out.println("x: " + x + " y: " + y);
 		if (conste == -1) {
 			return false;
 		}
