@@ -86,12 +86,17 @@ public class Tile {
 	 * @param plantId the ID of the plant to be planted on this tile
 	 * @param player  the Player object currently planting a seed
 	 * @param coste   the constellation value of the plant to be planted
+	 * @param x       the x coordinate of the tile to be planted on
+	 * @param y       the y coordinate of the tile to be planted on
+	 * @param farm    the 2d array of tiles representing the entire farm
 	 * @return a boolean value indicating whether or not the planting was successful
-	 *         TODO update javadoc
 	 */
 	public boolean plantSeed(int plantId, Player player, int conste, int x, int y, Tile farm[][]) {
 		System.out.println("x: " + x + " y: " + y);
-		if (this.state == STATE_PLOWED && (plantId >= 0 && plantId <= 7)) {
+		if (conste == -1) {
+			return false;
+		}
+		if (this.state == STATE_PLOWED && (plantId >= 0 && plantId <= 8)) {
 			this.resetPlant();
 			this.plant = new Plant(plantId, conste);
 			if (this.plant.getBuyPrice() <= player.getObjectCoins()) {
@@ -106,12 +111,14 @@ public class Tile {
 						boolean plantFound = false;
 						for (int i = -1; i < 2; i++) {
 							for (int j = 1; j > -2; j--) {
-								if (!(farm[x - i][y - j].getState() == STATE_UNPLOWED || farm[x - i][y - j].getState() == STATE_PLOWED) && !(x - i == x && y - j == y)) {
+								if (!(farm[x - i][y - j].getState() == STATE_UNPLOWED
+										|| farm[x - i][y - j].getState() == STATE_PLOWED)
+										&& !(x - i == x && y - j == y)) {
 									plantFound = true;
 									break;
 								}
 							}
-							if(plantFound)
+							if (plantFound)
 								break;
 						}
 						if (!plantFound) {
@@ -144,14 +151,19 @@ public class Tile {
 	 * @return a boolean value indicating whether or not the watering was successful
 	 */
 	public boolean waterTile(Player player) {
-		if (this.state == STATE_GROWING) {
-			if (player.getTool(Tool.TOOL_WATERING).useTool(player)) {
-				this.timesWatered++;
-				return true;
+		if (player == null) {
+			this.timesWatered++;
+			return true;
+		} else {
+			if (this.state == STATE_GROWING) {
+				if (player.getTool(Tool.TOOL_WATERING).useTool(player)) {
+					this.timesWatered++;
+					return true;
+				}
+				return false;
 			}
 			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -164,14 +176,19 @@ public class Tile {
 	 *         successful
 	 */
 	public boolean fertilizeTile(Player player) {
-		if (this.state == STATE_GROWING) {
-			if (player.getTool(Tool.TOOL_FERTILIZER).useTool(player)) {
-				this.timesFertilized++;
-				return true;
+		if (player == null) {
+			this.timesFertilized++;
+			return true;
+		} else {
+			if (this.state == STATE_GROWING) {
+				if (player.getTool(Tool.TOOL_FERTILIZER).useTool(player)) {
+					this.timesFertilized++;
+					return true;
+				}
+				return false;
 			}
 			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -187,6 +204,9 @@ public class Tile {
 		if (this.state == STATE_HARVESTABLE) {
 			this.state = STATE_UNPLOWED;
 			player.addObjectCoins(this.plant.calculateFinalPrice(player, this.timesWatered, this.timesFertilized));
+			if (this.plant.getPlantId() == Plant.PLANT_LARRY) {
+				player.addKusaCoins(30);
+			}
 			player.increaseExp(this.plant.getExpGain());
 			this.resetPlant();
 			return true;
@@ -257,6 +277,17 @@ public class Tile {
 		this.timesFertilized = 0;
 		this.timesWatered = 0;
 		this.daysPast = 0;
+	}
+
+	// TODO
+	public void makeMiracle() {
+		this.daysPast = this.plant.getDaysRequired() - 1;
+		this.timesWatered = 1000;
+		this.timesFertilized = 1000;
+	}
+
+	public void getDehydrated() {
+		this.timesWatered = 0;
 	}
 
 	/**

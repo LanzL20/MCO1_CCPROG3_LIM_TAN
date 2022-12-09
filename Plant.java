@@ -18,32 +18,41 @@ public class Plant {
 	public final static int PLANT_SUNFLOWER = 5;
 	public final static int PLANT_MANGO = 6;
 	public final static int PLANT_APPLE = 7;
+	public final static int PLANT_LARRY = 8;
 
 	private final static String[] PLANT_NAMES = { "Turnip", "Carrot", "Potato", "Rose", "Tulips", "Sunflower", "Mango",
-			"Apple" };
+			"Apple", "Larry" };
 
-	private final static String[] PLANT_IMAGE = { "Plant-Turnip.png", "Plant-Carrot.png", "Plant-Potato.png","Plant-Rose.png","Plant-Tulips.png",
-												"Plant-Sunflower.png","Plant-Mango.png","Plant-Apple.png"};
-	private final static int[] BUY_PRICE = { 500, 1000, 2000, 500, 1000, 2000, 10000, 20000 }; // 100x to avoid
-																								// truncation of
+	private final static String[] PLANT_IMAGE = { "Plant_Turnip.png", "Plant_Carrot.png", "Plant_Potato.png",
+			"Plant_Rose.png", "Plant_Tulips.png",
+			"Plant_Sunflower.png", "Plant_Mango.png", "Plant_Apple.png", "Plant_Larry.png" };
+	private final static String[] GACHA_IMAGE = { "Plant_TurnipGacha.png", "Plant_CarrotGacha.png", "Plant_PotatoGacha.png",
+			"Plant_RoseGacha.png", "Plant_TulipGacha.png",
+			"Plant_SunflowerGacha.png", "Plant_MangoGacha.png", "Plant_AppleGacha.png", "Plant_LarryGacha.png" };
+	private final static int[] BUY_PRICE = { 500, 1000, 2000, 500, 1000, 2000, 10000, 20000, 30000 }; // 100x to avoid
+	// truncation of
+	// floating point
+	// numbers
+	private final static int[] SELL_PRICE = { 600, 900, 300, 500, 900, 1900, 800, 500, 30000 }; // (Base Sell Prices)
+																								// 100x to
+																								// avoid truncation of
 																								// floating point
 																								// numbers
-	private final static int[] SELL_PRICE = { 600, 900, 300, 500, 900, 1900, 800, 500 }; // (Base Sell Prices) 100x to
-																							// avoid truncation of
-																							// floating point numbers
-	private final static int[] REQUIRED_WATER = { 1, 1, 3, 1, 2, 2, 7, 7 };
-	private final static int[] REQUIRED_FERTILIZER = { 0, 0, 1, 0, 0, 1, 4, 5 };
-	private final static int[] BONUS_WATER_CAP = { 2, 2, 4, 2, 3, 3, 7, 7 };
-	private final static int[] BONUS_FERTILIZER_CAP = { 1, 1, 2, 1, 1, 2, 4, 5 };
-	private final static int[] PRODUCTS_MIN = { 1, 1, 1, 1, 1, 1, 5, 10 };
-	private final static int[] PRODUCTS_MAX = { 2, 2, 10, 1, 1, 1, 15, 15 };
-	private final static int[] DAYS_REQUIRED = { 2, 3, 5, 1, 2, 3, 10, 10 };
-	private final static int[] EXP_GAIN = { 10, 15, 25, 5, 10, 15, 50, 50 }; // 2x to avoid truncation of floating point
-																				// numbers
-	private final static int[] CONST_MULTIPLIER = { 100, 100, 100, 100, 100, 100, 100, 100 }; // 100x to avoid
-																								// truncation of
-																								// floating point
-																								// numbers TODO: balance
+	private final static int[] REQUIRED_WATER = { 1, 1, 3, 1, 2, 2, 7, 7, 10 };
+	private final static int[] REQUIRED_FERTILIZER = { 0, 0, 1, 0, 0, 1, 4, 5, 8 };
+	private final static int[] BONUS_WATER_CAP = { 2, 2, 4, 2, 3, 3, 7, 7, 20 };
+	private final static int[] BONUS_FERTILIZER_CAP = { 1, 1, 2, 1, 1, 2, 4, 5, 15 };
+	private final static int[] PRODUCTS_MIN = { 1, 1, 1, 1, 1, 1, 5, 10, 1 };
+	private final static int[] PRODUCTS_MAX = { 2, 2, 10, 1, 1, 1, 15, 15, 1 };
+	private final static int[] DAYS_REQUIRED = { 2, 3, 5, 1, 2, 3, 10, 10, 15 };
+	private final static int[] EXP_GAIN = { 10, 15, 25, 5, 10, 15, 50, 50, 150 }; // 2x to avoid truncation of floating
+																					// point
+																					// numbers
+	private final static int[] CONST_MULTIPLIER = { 100, 100, 100, 100, 100, 100, 100, 100, 100 }; // 100x to avoid
+																									// truncation of
+																									// floating point
+																									// numbers TODO:
+																									// balance
 
 	private int plantId;
 	private int conste;
@@ -108,8 +117,12 @@ public class Plant {
 		return PLANT_NAMES[plantId];
 	}
 
-	public static String getPlantImageStatic(int plantId){
+	public static String getPlantImageStatic(int plantId) {
 		return PLANT_IMAGE[plantId];
+	}
+
+	public static String getGachaImageStatic(int plantId) {
+		return GACHA_IMAGE[plantId];
 	}
 
 	/**
@@ -122,6 +135,7 @@ public class Plant {
 	public static String getPlantNameStatic(int plantId) {
 		return PLANT_NAMES[plantId];
 	}
+	
 
 	/**
 	 * A method that returns the base buy price of this Plant.
@@ -154,6 +168,16 @@ public class Plant {
 	}
 
 	/**
+	 * A method that returns the required water needed to properly grow this plant.
+	 * 
+	 * @return the water required by this plant TODO
+	 */
+
+	public int getBonusWater() {
+		return BONUS_WATER_CAP[plantId];
+	}
+
+	/**
 	 * A method that returns the required fertilizer needed to properly grow this
 	 * plant.
 	 * 
@@ -162,6 +186,11 @@ public class Plant {
 
 	public int getRequiredFertilizer() {
 		return REQUIRED_FERTILIZER[plantId];
+	}
+
+	// TODO
+	public int getBonusFertilizer() {
+		return BONUS_FERTILIZER_CAP[plantId];
 	}
 
 	/**

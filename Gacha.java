@@ -20,10 +20,11 @@ public class Gacha {
 	 * in the banner at the start of the game.
 	 */
 	public Gacha() {
-		this.constPlants = new int[8];
+		this.constPlants = new int[9];
 		for (int i = 0; i < 8; i++) {
 			this.constPlants[i] = 0;
 		}
+		this.constPlants[8] = -1;
 		this.constTools = new int[5];
 		for (int i = 0; i < 5; i++) {
 			this.constTools[i] = 0;
@@ -42,7 +43,7 @@ public class Gacha {
 		boolean found = false;
 		while (counter != 4) {
 			found = false;
-			temp = (int) Math.floor(Math.random() * 13);
+			temp = (int) Math.floor(Math.random() * 14);
 			for (int j = 0; j < counter; j++) {
 				if (temp == banner[j]) {
 					found = true;
@@ -67,14 +68,14 @@ public class Gacha {
 		if (player.getKusaCoins() >= PULL_COST) {
 			player.deductKusaCoins(PULL_COST);
 			int roll = (int) Math.floor(Math.random() * 4);
-			if (banner[roll] < 8) {
+			if (banner[roll] < 9) {
 				constPlants[banner[roll]]++;
 				if (constPlants[banner[roll]] > MAX_CONST)
 					constPlants[banner[roll]] = MAX_CONST;
 			} else {
-				constTools[banner[roll] - 8]++;
-				if (constTools[banner[roll] - 8] > MAX_CONST)
-					constTools[banner[roll] - 8] = MAX_CONST;
+				constTools[banner[roll] - 9]++;
+				if (constTools[banner[roll] - 9] > MAX_CONST)
+					constTools[banner[roll] - 9] = MAX_CONST;
 			}
 			return banner[roll];
 		}

@@ -19,6 +19,8 @@ public class Player {
 	private final static int[] WATER_BONUS_INC = { 0, 0, 1, 2 };
 	private final static int[] FERTILIZER_BONUS_INC = { 0, 0, 0, 1 };
 	private final static int[] REGISTRATION_FEE = { -1, 20000, 30000, 40000 }; // 100x
+	private final static String[] REG_IMAGES = { "Stats-Reg1.png", "Stats-Reg2.png", "Stats-Reg3.png",
+			"Stats-Reg4.png" };
 
 	private int exp;
 	private int objectCoins;
@@ -35,7 +37,7 @@ public class Player {
 	 */
 	public Player(String name) {
 		this.exp = 10000; // 2x
-		this.objectCoins = 1000000; // 100x
+		this.objectCoins = 1000; // 100x
 		this.kusaCoins = 5000;
 		this.registration = REGISTRATION_BASE;
 		this.name = name;
@@ -74,13 +76,20 @@ public class Player {
 	 * @return a boolean value indicating whether or not the tool replacement
 	 *         was successful
 	 */
-	public boolean replaceTool(int toolId, int conste) {
+	public boolean repairTool(int toolId, int conste) {
 		if (this.toolbar[toolId].getReplaceCost() <= this.objectCoins) {
 			this.toolbar[toolId] = new Tool(toolId, conste);
 			this.deductObjectCoins(this.toolbar[toolId].getReplaceCost());
 			return true;
 		}
 		return false;
+	}
+
+	// TODO
+	public void replaceTool(int toolId, int conste) {
+		this.toolbar[toolId] = new Tool(toolId, conste);
+		this.deductObjectCoins(this.toolbar[toolId].getReplaceCost());
+
 	}
 
 	/**
@@ -108,6 +117,10 @@ public class Player {
 	 */
 	public String getRegistrationName() {
 		return REG_NAMES[this.registration];
+	}
+
+	public String getRegistrationImage() { // TODO
+		return REG_IMAGES[this.registration];
 	}
 
 	/**
