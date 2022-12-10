@@ -1,4 +1,4 @@
-// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
+// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO2 
 
 /**
  * Player is the class that simulates the components and fucntionality of a
@@ -7,20 +7,26 @@
  */
 public class Player {
 
+	// All public IDs for all the possible levels of registration.
 	public final static int REGISTRATION_BASE = 0;
 	public final static int REGISTRATION_REGISTERED = 1;
 	public final static int REGISTRATION_DISTINGUISHED = 2;
 	public final static int REGISTRATION_LEGENDARY = 3;
 
+	// All the private constants associated with registration.
 	private final static String[] REG_NAMES = { "Non-Registered", "Registered", "Distinguished", "Legendary" };
-	private final static int[] REG_EXP_REQUIREMENT = { 0, 1000, 2000, 3000 }; // 2x
-	private final static int[] BONUS_EARNINGS = { 0, 100, 200, 400 }; // 100x
-	private final static int[] SEED_COST_REDUCTION = { 0, 100, 200, 300 }; // 100x
+	// 2x to avoid the truncation of floating point numbers.
+	private final static int[] REG_EXP_REQUIREMENT = { 0, 1000, 2000, 3000 };
+	// 100x to avoid the truncation of floating point numbers.
+	private final static int[] BONUS_EARNINGS = { 0, 100, 200, 400 };
+	// 100x to avoid the truncation of floating point numbers.
+	private final static int[] SEED_COST_REDUCTION = { 0, 100, 200, 300 };
 	private final static int[] WATER_BONUS_INC = { 0, 0, 1, 2 };
 	private final static int[] FERTILIZER_BONUS_INC = { 0, 0, 0, 1 };
-	private final static int[] REGISTRATION_FEE = { -1, 20000, 30000, 40000 }; // 100x
-	private final static String[] REG_IMAGES = { "Stats-Reg1.png", "Stats-Reg2.png", "Stats-Reg3.png",
-			"Stats-Reg4.png" };
+	// 100x to avoid the truncation of floating point numbers.
+	private final static int[] REGISTRATION_FEE = { -1, 20000, 30000, 40000 };
+	private final static String[] REG_IMAGES = { "Stats_Reg1.png", "Stats_Reg2.png", "Stats_Reg3.png",
+			"Stats_Reg4.png" };
 
 	private int exp;
 	private int objectCoins;
@@ -36,11 +42,17 @@ public class Player {
 	 * @param name the name of the player to be created
 	 */
 	public Player(String name) {
-		this.exp = 10000; // 2x
-		this.objectCoins = 1000000; // 100x
-		this.kusaCoins = 5000;
+
+		// Set all initial stats for player.
+		// 2x to avoid the truncation of floating point numbers.
+		this.exp = 0;
+		// 100x to avoid the truncation of floating point numbers.
+		this.objectCoins = 10000;
+		this.kusaCoins = 50;
 		this.registration = REGISTRATION_BASE;
 		this.name = name;
+
+		// Generate initial toolbar for the player.
 		this.toolbar = new Tool[5];
 		this.toolbar[Tool.TOOL_PLOW] = new Tool(Tool.TOOL_PLOW, 0);
 		this.toolbar[Tool.TOOL_WATERING] = new Tool(Tool.TOOL_WATERING, 0);
@@ -57,8 +69,11 @@ public class Player {
 	 *         was successful
 	 */
 	public boolean upgradeRegistration() {
+		// If the player is able to register for a higher tier (sufficient exp, enough
+		// objectCoins, not already at max registration)...
 		if (this.registration != REGISTRATION_LEGENDARY && (int) this.exp >= this.upgRegExpReq()
 				&& this.objectCoins >= upgRegFee()) {
+			// Carry out their registration upgrade.
 			this.deductObjectCoins(REGISTRATION_FEE[this.registration + 1]);
 			this.registration++;
 			return true;
@@ -77,7 +92,9 @@ public class Player {
 	 *         was successful
 	 */
 	public boolean repairTool(int toolId, int conste) {
+		// If the player has sufficient objectCoins...
 		if (this.toolbar[toolId].getReplaceCost() <= this.objectCoins) {
+			// Replace the specficed tool.
 			this.toolbar[toolId] = new Tool(toolId, conste);
 			this.deductObjectCoins(this.toolbar[toolId].getReplaceCost());
 			return true;
@@ -85,11 +102,15 @@ public class Player {
 		return false;
 	}
 
-	// TODO
+	/**
+	 * This method simply replaces a specified tool (indicated by toolId) with a new
+	 * tool (without checking). This is for use in certain events.
+	 * 
+	 * @param toolId the ID of the tool to be replaced with a new tool
+	 * @param conste the constellation of the new tool to be created.
+	 */
 	public void replaceTool(int toolId, int conste) {
 		this.toolbar[toolId] = new Tool(toolId, conste);
-		this.deductObjectCoins(this.toolbar[toolId].getReplaceCost());
-
 	}
 
 	/**
@@ -119,7 +140,13 @@ public class Player {
 		return REG_NAMES[this.registration];
 	}
 
-	public String getRegistrationImage() { // TODO
+	/**
+	 * This method returns the filename of the image associated with the current
+	 * registration of the player.
+	 * 
+	 * @return the registration name of the player as a String
+	 */
+	public String getRegistrationImage() {
 		return REG_IMAGES[this.registration];
 	}
 
@@ -276,5 +303,4 @@ public class Player {
 	public void deductKusaCoins(int coins) {
 		this.kusaCoins -= coins;
 	}
-
 }

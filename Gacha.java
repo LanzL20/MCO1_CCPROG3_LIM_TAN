@@ -1,4 +1,4 @@
-// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
+// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO2
 
 /**
  * Gacha is the handler class that deals with all the logic behind plant and
@@ -6,6 +6,8 @@
  */
 
 public class Gacha {
+
+	// All the public constants associated with Tool.
 	public final static int MAX_CONST = 3;
 	public final static int PULL_COST = 20;
 
@@ -20,15 +22,21 @@ public class Gacha {
 	 * in the banner at the start of the game.
 	 */
 	public Gacha() {
+
+		// Set every plant and tool const to start at 0...
 		this.constPlants = new int[9];
 		for (int i = 0; i < 8; i++) {
 			this.constPlants[i] = 0;
 		}
-		this.constPlants[8] = -1;
 		this.constTools = new int[5];
 		for (int i = 0; i < 5; i++) {
 			this.constTools[i] = 0;
 		}
+
+		// Except for Larry's, being -1 to denote still being locked at the start.
+		this.constPlants[8] = -1;
+
+		// Generate banner for first day.
 		this.banner = new int[4];
 		resetBanner();
 	}
@@ -41,6 +49,7 @@ public class Gacha {
 		int counter = 0;
 		int temp;
 		boolean found = false;
+		// Until four unique ids have been set, keep generating.
 		while (counter != 4) {
 			found = false;
 			temp = (int) Math.floor(Math.random() * 14);
@@ -58,14 +67,17 @@ public class Gacha {
 	}
 
 	/**
-	 * This method rolls on the banner as specified by banner[], appropriately deducting
+	 * This method rolls on the banner as specified by banner[], appropriately
+	 * deducting
 	 * KusaCoins and increasing the constellations based on chance.
 	 * 
 	 * @param player Player object where we deduct the cost of using rollBanner
 	 * @return if successful, the plant/tool const gotten; if not, -1
 	 */
 	public int rollBanner(Player player) {
+		// If player has enough kusaCoins...
 		if (player.getKusaCoins() >= PULL_COST) {
+			// Roll on the banner and raise the const of one random plant/tool.
 			player.deductKusaCoins(PULL_COST);
 			int roll = (int) Math.floor(Math.random() * 4);
 			if (banner[roll] < 9) {

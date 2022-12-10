@@ -1,4 +1,4 @@
-// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO1 
+// Authored by: Lanz Kendall Y. Lim and Tyler Justin H. Tan, CCPROG3 MCO2 
 
 /**
  * This class serves as the blueprint for a plant containing the various
@@ -10,6 +10,7 @@
  */
 public class Plant {
 
+	// All the public IDs for all the possible plants.
 	public final static int PLANT_TURNIP = 0;
 	public final static int PLANT_CARROT = 1;
 	public final static int PLANT_POTATO = 2;
@@ -20,24 +21,20 @@ public class Plant {
 	public final static int PLANT_APPLE = 7;
 	public final static int PLANT_LARRY = 8;
 
+	// All the private constants associated with Plant.
 	private final static String[] PLANT_NAMES = { "Turnip", "Carrot", "Potato", "Rose", "Tulips", "Sunflower", "Mango",
 			"Apple", "Larry" };
-
 	private final static String[] PLANT_IMAGE = { "Plant_Turnip.png", "Plant_Carrot.png", "Plant_Potato.png",
 			"Plant_Rose.png", "Plant_Tulips.png",
 			"Plant_Sunflower.png", "Plant_Mango.png", "Plant_Apple.png", "Plant_Larry.png" };
-	private final static String[] GACHA_IMAGE = { "Plant_TurnipGacha.png", "Plant_CarrotGacha.png", "Plant_PotatoGacha.png",
-			"Plant_RoseGacha.png", "Plant_TulipGacha.png",
-			"Plant_SunflowerGacha.png", "Plant_MangoGacha.png", "Plant_AppleGacha.png", "Plant_LarryGacha.png" };
-	private final static int[] BUY_PRICE = { 500, 1000, 2000, 500, 1000, 2000, 10000, 20000, 30000 }; // 100x to avoid
-	// truncation of
-	// floating point
-	// numbers
-	private final static int[] SELL_PRICE = { 600, 900, 300, 500, 900, 1900, 800, 500, 30000 }; // (Base Sell Prices)
-																								// 100x to
-																								// avoid truncation of
-																								// floating point
-																								// numbers
+	private final static String[] GACHA_IMAGE = { "Plant_TurnipGacha.png", "Plant_CarrotGacha.png",
+			"Plant_PotatoGacha.png",
+			"Plant_RoseGacha.png", "Plant_TulipGacha.png", "Plant_SunflowerGacha.png", "Plant_MangoGacha.png",
+			"Plant_AppleGacha.png", "Plant_LarryGacha.png" };
+	// 100x to avoid the truncation of floating point numbers.
+	private final static int[] BUY_PRICE = { 500, 1000, 2000, 500, 1000, 2000, 10000, 20000, 30000 };
+	// (Base Sell Prices) 100x to avoid the truncation of floating point numbers.
+	private final static int[] SELL_PRICE = { 600, 900, 300, 500, 900, 1900, 800, 500, 20000 };
 	private final static int[] REQUIRED_WATER = { 1, 1, 3, 1, 2, 2, 7, 7, 10 };
 	private final static int[] REQUIRED_FERTILIZER = { 0, 0, 1, 0, 0, 1, 4, 5, 8 };
 	private final static int[] BONUS_WATER_CAP = { 2, 2, 4, 2, 3, 3, 7, 7, 20 };
@@ -45,14 +42,10 @@ public class Plant {
 	private final static int[] PRODUCTS_MIN = { 1, 1, 1, 1, 1, 1, 5, 10, 1 };
 	private final static int[] PRODUCTS_MAX = { 2, 2, 10, 1, 1, 1, 15, 15, 1 };
 	private final static int[] DAYS_REQUIRED = { 2, 3, 5, 1, 2, 3, 10, 10, 15 };
-	private final static int[] EXP_GAIN = { 10, 15, 25, 5, 10, 15, 50, 50, 150 }; // 2x to avoid truncation of floating
-																					// point
-																					// numbers
-	private final static int[] CONST_MULTIPLIER = { 100, 100, 100, 100, 100, 100, 100, 100, 100 }; // 100x to avoid
-																									// truncation of
-																									// floating point
-																									// numbers TODO:
-																									// balance
+	// 2x to avoid the truncation of floating point numbers.
+	private final static int[] EXP_GAIN = { 10, 15, 25, 5, 10, 15, 50, 50, 150 };
+	// 100x to avoid the truncation of floating point numbers.
+	private final static int[] CONST_MULTIPLIER = { 200, 200, 100, 300, 300, 300, 100, 100, 300 };
 
 	private int plantId;
 	private int conste;
@@ -82,16 +75,23 @@ public class Plant {
 	 * @return the final sell cost of a plant
 	 */
 	public int calculateFinalPrice(Player player, int timesWatered, int timesFertilized) {
+
+		// Calculate for initial harvestTotal...
 		int harvestTotal = this.productsProduced
 				* ((SELL_PRICE[plantId] + conste * CONST_MULTIPLIER[plantId]) + player.getEarningBonus());
+
+		// Set caps on waterBonus and fertilizerBonus...
 		if (timesWatered > BONUS_WATER_CAP[plantId] + player.getWaterBonusInc())
 			timesWatered = BONUS_WATER_CAP[plantId] + player.getWaterBonusInc();
 		if (timesFertilized > BONUS_FERTILIZER_CAP[plantId] + player.getFertilizerBonusInc())
 			timesFertilized = BONUS_FERTILIZER_CAP[plantId] + player.getFertilizerBonusInc();
+
+		// Add the bonuses associated with waterBonus and fertilizerBonus...
 		int waterBonus = (int) (harvestTotal * 0.2 * (timesWatered - 1));
 		int fertilizerBonus = (int) (harvestTotal * 0.5 * timesFertilized);
 		int finalHarvestPrice = harvestTotal + waterBonus + fertilizerBonus;
 
+		// If flower, add flower bonus...
 		if (isFlower())
 			finalHarvestPrice = (int) (finalHarvestPrice * 1.1);
 		return finalHarvestPrice;
@@ -102,7 +102,6 @@ public class Plant {
 	 * 
 	 * @return the id of this object's plant
 	 */
-
 	public int getPlantId() {
 		return plantId;
 	}
@@ -112,17 +111,8 @@ public class Plant {
 	 * 
 	 * @return the name of this plant
 	 */
-
 	public String getPlantName() {
 		return PLANT_NAMES[plantId];
-	}
-
-	public static String getPlantImageStatic(int plantId) {
-		return PLANT_IMAGE[plantId];
-	}
-
-	public static String getGachaImageStatic(int plantId) {
-		return GACHA_IMAGE[plantId];
 	}
 
 	/**
@@ -135,7 +125,32 @@ public class Plant {
 	public static String getPlantNameStatic(int plantId) {
 		return PLANT_NAMES[plantId];
 	}
-	
+
+	/**
+	 * A method that returns the filename of the image of a specific plant in
+	 * String format to be used in the planting menu based on the plantId provided
+	 * in the parameters.
+	 * 
+	 * @param plantId id of the plant provided in the parameter
+	 * @return the filename of the image of a specific plant (for the planting menu)
+	 *         based on the id provided in the parameter
+	 */
+	public static String getPlantImageStatic(int plantId) {
+		return PLANT_IMAGE[plantId];
+	}
+
+	/**
+	 * A method that returns the filename of the image of a specific plant in
+	 * String format to be used in the gacha sidebar based on the plantId provided
+	 * in the parameters.
+	 * 
+	 * @param plantId id of the plant provided in the parameter
+	 * @return the filename of the image of a specific plant (for the gacha sidebar)
+	 *         based on the id provided in the parameter
+	 */
+	public static String getGachaImageStatic(int plantId) {
+		return GACHA_IMAGE[plantId];
+	}
 
 	/**
 	 * A method that returns the base buy price of this Plant.
@@ -162,17 +177,15 @@ public class Plant {
 	 * 
 	 * @return the water required by this plant
 	 */
-
 	public int getRequiredWater() {
 		return REQUIRED_WATER[plantId];
 	}
 
 	/**
-	 * A method that returns the required water needed to properly grow this plant.
+	 * A method that returns the bonus water cap for this plant.
 	 * 
-	 * @return the water required by this plant TODO
+	 * @return the bonus water cap for this plant
 	 */
-
 	public int getBonusWater() {
 		return BONUS_WATER_CAP[plantId];
 	}
@@ -183,24 +196,25 @@ public class Plant {
 	 * 
 	 * @return the fertilizer required by this plant
 	 */
-
 	public int getRequiredFertilizer() {
 		return REQUIRED_FERTILIZER[plantId];
 	}
 
-	// TODO
+	/**
+	 * A method that returns the bonus fertilizer cap for this plant.
+	 * 
+	 * @return the bonus fertilizer cap for this plant
+	 */
 	public int getBonusFertilizer() {
 		return BONUS_FERTILIZER_CAP[plantId];
 	}
 
 	/**
 	 * A method that returns the required number of days this plant needs to go
-	 * through
-	 * to be harvestable.
+	 * through to be harvestable.
 	 * 
 	 * @return the number of days this plant needs to grow
 	 */
-
 	public int getDaysRequired() {
 		return DAYS_REQUIRED[plantId];
 	}
@@ -211,7 +225,6 @@ public class Plant {
 	 * 
 	 * @return the experience gained from harvesting this plant
 	 */
-
 	public int getExpGain() {
 		return EXP_GAIN[plantId];
 	}
@@ -251,8 +264,16 @@ public class Plant {
 	 *
 	 * @return true if plant this plant is a tree and false otherwise.
 	 */
-
 	public boolean isTree() {
 		return this.plantId == PLANT_MANGO || this.plantId == PLANT_APPLE;
+	}
+
+	/**
+	 * A method that returns the whether this plant is larry or not.
+	 *
+	 * @return true if plant this plant is larry and false otherwise.
+	 */
+	public boolean isLarry() {
+		return this.plantId == PLANT_LARRY;
 	}
 }

@@ -88,13 +88,16 @@ public class View {
         this.startButton.setFocusable(false);
         this.startFrame.add(startButton);
 
+        // Add the label instructing the player to input rockscatter filename.
         this.fileLabel = new JLabel("Please input rockscatter filename...");
         this.startFrame.add(fileLabel);
 
+        // Add the textfield to hold the inputted rockscatter filename.
         this.fileTextField = new JTextField();
         this.fileTextField.setPreferredSize(new Dimension(150, 30));
         this.startFrame.add(fileTextField);
 
+        // Add the button to generate a random rockscatter.
         this.fileButton = new JButton();
         this.fileButton.setText("Generate Random Rockscatter");
         this.fileButton.addActionListener(fileListener);
@@ -128,6 +131,7 @@ public class View {
             ActionListener tileListeners[],
             ActionListener nextDayListener, ActionListener rollListener, ActionListener regListener,
             ActionListener repairListener) {
+        // Initialize the main frame.
         this.mainFrame = new JFrame();
         this.mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.mainFrame.setUndecorated(true);
@@ -135,6 +139,7 @@ public class View {
         this.mainFrame.setLocationRelativeTo(null);
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Initialize the upper tool panel.
         this.toolPanel = new JPanel();
         this.toolPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 50, 5));
         this.toolPanel.setBackground(new Color(83, 41, 21));
@@ -171,14 +176,14 @@ public class View {
                 .getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
         this.repairButton.setBorderPainted(false);
         this.toolPanel.add(repairButton);
-
         this.nextDayJLabel = new JLabel();
         this.nextDayJLabel.setForeground(Color.white);
         this.nextDayJLabel.setFont(new Font("Gotham", Font.PLAIN, 50));
         this.toolPanel.add(nextDayJLabel);
 
+        // Initialize the left stat panel.
         this.statPanel = new JPanel();
-        this.statPanel.setBackground(Color.blue);
+        this.statPanel.setBackground(new Color(26, 43, 86));
         this.statPanel.setPreferredSize(new Dimension(125, 100));
         this.farmerLabel = new JLabel("Farmer " + playerName);
         this.expLabel = new JLabel();
@@ -187,25 +192,21 @@ public class View {
         this.registrationLabel = new JLabel();
         this.registrationLevelLabel = new JLabel();
         this.expLabel.setIcon(new ImageIcon(
-                new ImageIcon("Stats-EXP.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+                new ImageIcon("Stats_EXP.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
         this.expLabel.setVerticalTextPosition(JLabel.BOTTOM);
         this.expLabel.setHorizontalTextPosition(JLabel.CENTER);
-
         this.registrationLabel.setIcon(new ImageIcon(
-                new ImageIcon("Stats-Reg.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+                new ImageIcon("Stats_Reg1.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
         this.registrationLabel.setVerticalTextPosition(JLabel.BOTTOM);
         this.registrationLabel.setHorizontalTextPosition(JLabel.CENTER);
-
         this.kusaCoinsLabel.setVerticalTextPosition(JLabel.BOTTOM);
         this.kusaCoinsLabel.setHorizontalTextPosition(JLabel.CENTER);
         this.kusaCoinsLabel.setIcon(new ImageIcon(new ImageIcon("Stats_KusaCoin.png").getImage()
                 .getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
-
         this.objectCoinsLabel.setHorizontalTextPosition(JLabel.CENTER);
         this.objectCoinsLabel.setVerticalTextPosition(JLabel.BOTTOM);
         this.objectCoinsLabel.setIcon(new ImageIcon(new ImageIcon("Stats_ObjectCoin.png").getImage()
                 .getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
-
         this.farmerLabel.setForeground(Color.white);
         this.farmerLabel.setVerticalTextPosition(JLabel.BOTTOM);
         this.farmerLabel.setHorizontalTextPosition(JLabel.CENTER);
@@ -222,9 +223,11 @@ public class View {
         this.statPanel.add(kusaCoinsLabel);
         this.statPanel.add(registrationLabel);
         this.statPanel.add(registrationLevelLabel);
-
         this.upgradeRegistrationButton = new JButton();
         this.upgradeRegistrationButton.setText("Promote!");
+        this.upgradeRegistrationButton.setForeground(Color.white);
+        this.upgradeRegistrationButton.setBackground(new Color(26, 43, 86));
+        this.upgradeRegistrationButton.setBorderPainted(false);
         this.upgradeRegistrationButton.setFocusable(false);
         this.upgradeRegistrationButton.setPreferredSize(new Dimension(90, 90));
         this.upgradeRegistrationButton.addActionListener(regListener);
@@ -235,12 +238,16 @@ public class View {
         this.upgradeRegistrationButton.setVerticalTextPosition(JButton.BOTTOM);
         this.statPanel.add(upgradeRegistrationButton);
 
+        // Initialize the right gacha panel.
         this.gachaPanel = new JPanel();
-        this.gachaPanel.setBackground(Color.red);
+        this.gachaPanel.setBackground(new Color(128, 0, 0));
         this.gachaPanel.setPreferredSize(new Dimension(125, 100));
         this.gachaPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
         this.rollButton = new JButton("Roll!");
         this.rollButton.setPreferredSize(new Dimension(100, 100));
+        this.rollButton.setBackground(new Color(128, 0, 0));
+        this.rollButton.setBorderPainted(false);
+        this.rollButton.setForeground(Color.white);
         this.rollButton.setFocusable(false);
         this.rollButton.addActionListener(rollListener);
         this.rollButton.setIcon(new ImageIcon(
@@ -253,15 +260,19 @@ public class View {
         for (int i = 0; i < 4; i++) {
             this.bannerLabels[i] = new JLabel();
             this.gachaPanel.add(bannerLabels[i]);
+            this.bannerLabels[i].setForeground(Color.white);
         }
 
+        // Initialize the lower text panel.
         this.textPanel = new JPanel();
         this.textPanel.setLayout(null);
-        this.textPanel.setBackground(Color.MAGENTA);
+        this.textPanel.setBackground(new Color(255, 253, 208));
         this.textPanel.setPreferredSize(new Dimension(100, 100));
         this.textLabels = new ArrayList<JLabel>();
         this.nextDayButton = new JButton();
         this.nextDayButton.setBounds(1350, 15, 125, 70);
+        this.nextDayButton.setBackground(new Color(255, 253, 208));
+        this.nextDayButton.setBorderPainted(false);
         this.nextDayButton.setText("Next Day");
         this.nextDayButton.setFocusable(false);
         this.nextDayButton.addActionListener(nextDayListener);
@@ -272,6 +283,8 @@ public class View {
         this.nextDayButton.setVerticalTextPosition(JButton.CENTER);
         this.textPanel.add(nextDayButton);
         this.upScrollButton = new JButton();
+        this.upScrollButton.setBackground(new Color(255, 253, 208));
+        this.upScrollButton.setBorderPainted(false);
         this.upScrollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -287,6 +300,8 @@ public class View {
                 new ImageIcon("Text_Up.png").getImage().getScaledInstance(28, 20,
                         Image.SCALE_DEFAULT)));
         this.downScrollButton = new JButton();
+        this.downScrollButton.setBackground(new Color(255, 253, 208));
+        this.downScrollButton.setBorderPainted(false);
         this.downScrollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -297,7 +312,6 @@ public class View {
                         label.setLocation((int) label.getLocation().getX(), (int) label.getLocation().getY() - 32);
 
                     }
-                    System.out.println(scrollOffset);
                 }
 
             }
@@ -310,6 +324,7 @@ public class View {
         this.textPanel.add(upScrollButton);
         this.textPanel.add(downScrollButton);
 
+        // Initialize the central farm panel.
         this.farmPanel = new JPanel();
         this.farmPanel.setBackground(new Color(87, 95, 58));
         this.farmPanel.setLayout(new GridLayout(5, 10));
@@ -329,6 +344,7 @@ public class View {
             }
         }
 
+        // Finally add all five panels to the main game frame.
         this.mainFrame.add(this.toolPanel, BorderLayout.NORTH);
         this.mainFrame.add(this.statPanel, BorderLayout.WEST);
         this.mainFrame.add(this.gachaPanel, BorderLayout.EAST);
@@ -341,6 +357,7 @@ public class View {
     }
 
     public void setSelectedTool(int selectedToolId) {
+        // Setting the color of the selected tool.
         for (int i = 0; i < 6; i++) {
             if (i == selectedToolId) {
                 this.toolButtons[i].setBackground(new Color(198, 174, 146));
@@ -360,7 +377,7 @@ public class View {
 
     public void updateStatPanel(int exp, int objectCoins, int kusaCoins, String registration, String regImg) {
         this.expLabel.setText("EXP: " + ((double) exp / 2) + " (" + (exp / 200) + ")");
-        this.objectCoinsLabel.setText("ObjectCoins: " + (objectCoins / 100));
+        this.objectCoinsLabel.setText("ObjectCoins: " + ((double) objectCoins / 100));
         this.kusaCoinsLabel.setText("KusaCoins: " + kusaCoins);
         this.registrationLabel.setText("Registration:");
         this.registrationLevelLabel.setText(registration);
@@ -369,20 +386,26 @@ public class View {
     }
 
     public void addToTextPanel(String text) {
+        // Simply keeping a ArrayList of labels to store all texts in the text panel.
+
+        // Then simply shifting them up when new text is introduced.
         for (JLabel label : textLabels) {
             label.setLocation((int) label.getLocation().getX(),
                     (int) label.getLocation().getY() - 32 + scrollOffset * 32);
         }
         this.scrollOffset = 0;
+
+        // Then adding the new panel to the ArrayList.
         JLabel label = new JLabel(text);
         label.setPreferredSize(new Dimension(1600, 50));
         label.setBounds(70, 57, 1600, 55);
         label.setFont(new Font("Gotham", Font.PLAIN, 27));
-        this.textPanel.add(label); // GOTHAm TODO
+        this.textPanel.add(label);
         textLabels.add(label);
     }
 
     public void updateGachaBanner(int bannerIds[]) {
+        // Altering the four banner labels to fit the current banner in model.
         for (int i = 0; i < 4; i++) {
             if (bannerIds[i] <= 8 && bannerIds[i] >= 0) {
                 this.bannerLabels[i].setText(Plant.getPlantNameStatic(bannerIds[i]));
@@ -396,27 +419,29 @@ public class View {
 
             this.bannerLabels[i].setVerticalTextPosition(JLabel.TOP);
             this.bannerLabels[i].setHorizontalTextPosition(JLabel.CENTER);
-            this.bannerLabels[i].setFont(new Font("Gotham", Font.PLAIN, 15));
         }
-
     }
 
     public void popupPlantingSeed(ActionListener plantingListeners[], int x, int y) {
+        // If there currently exists a popup, discard that first.
         if (this.popupFrame != null) {
             this.disposePopupJFrame();
         }
+        // Create this new popup frame.
         this.popupFrame = new JFrame();
-        JPanel plantPanel = new JPanel();
-
         this.popupFrame.setTitle("Planting in tile (" + x + ", " + y + ")...");
         this.popupFrame.setSize(300, 350);
         this.popupFrame.setResizable(false);
         this.popupFrame.setLocationRelativeTo(null);
         this.popupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        plantPanel.setBackground(new Color(197,136,7));
+        // Create a panel to contain the succeeding elements.
+        JPanel plantPanel = new JPanel();
+        plantPanel.setBackground(new Color(197, 136, 7));
         plantPanel.setLayout(new GridLayout(3, 3));
         plantPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        // Create nine buttons for all the different types of seeds.
         JButton plantButtons[];
         plantButtons = new JButton[9];
         for (int i = 0; i < 9; i++) {
@@ -424,8 +449,13 @@ public class View {
             plantButtons[i].addActionListener(plantingListeners[i]);
             plantPanel.add(plantButtons[i]);
             plantButtons[i].setBorderPainted(false);
-            plantButtons[i].setBackground(new Color(197,136,7));
-            plantPanel.setFocusable(false);
+            plantButtons[i].setBackground(new Color(197, 136, 7));
+            plantButtons[i].setFocusable(false);
+            plantButtons[i].setText("" + (Plant.getBuyPriceStatic(i) / 100));
+            plantButtons[i].setHorizontalTextPosition(JLabel.CENTER);
+            if (i != 0)
+                plantButtons[i].setForeground(Color.white);
+            plantButtons[i].setVerticalTextPosition(JLabel.CENTER);
         }
         plantButtons[0].setIcon(new ImageIcon(new ImageIcon("Plant_Turnip.png").getImage()
                 .getScaledInstance(186, 186, Image.SCALE_DEFAULT)));
@@ -446,8 +476,10 @@ public class View {
         plantButtons[8].setIcon(new ImageIcon(new ImageIcon("Plant_Larry.png").getImage()
                 .getScaledInstance(186, 186, Image.SCALE_DEFAULT)));
 
+        // Finally add the panel with all the buttons into the frame.
         this.popupFrame.add(plantPanel, BorderLayout.CENTER);
 
+        // Add a close button at the bottom of the frame.
         JButton closeButton = new JButton();
         closeButton.addActionListener(new ActionListener() {
             @Override
@@ -457,15 +489,18 @@ public class View {
         });
         this.popupFrame.add(closeButton, BorderLayout.SOUTH);
 
+        // Set this popup frame to be visible.
         this.popupFrame.setVisible(true);
     }
 
     public void disposePopupJFrame() {
+        // Dispose of the currently existing popup.
         this.popupFrame.dispose();
         this.popupFrame = null;
     }
 
     public void updateTile(Tile t, int x, int y) {
+        // Update the tile image based on its state and the plant it might contain.
         switch (t.getState()) {
             case Tile.STATE_ROCK:
                 this.tileButtons[x + y * 10].setIcon(new ImageIcon(
@@ -499,6 +534,12 @@ public class View {
                 else if (t.getPlant().getPlantId() == Plant.PLANT_MANGO) {
                     this.tileButtons[x + y * 10].setIcon(new ImageIcon(
                             new ImageIcon("Tile_Mango.png").getImage().getScaledInstance(186, 186,
+                                    Image.SCALE_DEFAULT)));
+                }
+
+                else if (t.getPlant().getPlantId() == Plant.PLANT_LARRY) {
+                    this.tileButtons[x + y * 10].setIcon(new ImageIcon(
+                            new ImageIcon("Tile_Larry.png").getImage().getScaledInstance(186, 186,
                                     Image.SCALE_DEFAULT)));
                 }
 
@@ -538,7 +579,7 @@ public class View {
                                 .getImage().getScaledInstance(186, 186, Image.SCALE_DEFAULT)));
                         break;
                     case Plant.PLANT_LARRY:
-                        this.tileButtons[x + y * 10].setIcon(new ImageIcon(new ImageIcon("Tile_Larry.png")
+                        this.tileButtons[x + y * 10].setIcon(new ImageIcon(new ImageIcon("Tile_LarryHarvest.png")
                                 .getImage().getScaledInstance(186, 186, Image.SCALE_DEFAULT)));
                         break;
                 }
@@ -552,17 +593,23 @@ public class View {
     }
 
     public void popupEndgame() {
+        // If there currently exists a popup, discard that first.
         if (this.popupFrame != null) {
             this.disposePopupJFrame();
         }
+
+        // Create the popup frame to denote the end of the game.
         this.popupFrame = new JFrame();
         this.popupFrame.setLayout(new FlowLayout());
         this.popupFrame.setSize(400, 70);
         this.popupFrame.add(new JLabel("Sorry, partner... but you just lost! Thanks for playin' tho!"));
         this.popupFrame.setResizable(false);
         this.popupFrame.setLocationRelativeTo(null);
+
+        // Set the default close operation to exit the application.
         this.popupFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Set this popup frame to be visible.
         this.popupFrame.setVisible(true);
     }
 }
